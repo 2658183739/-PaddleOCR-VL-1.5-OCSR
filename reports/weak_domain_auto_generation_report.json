@@ -1,0 +1,34 @@
+{
+  "train_jsonl": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_singleline_rw_messages.jsonl",
+  "output_jsonl": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_weak_domain_auto_messages.jsonl",
+  "assets_root": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\assets\\weak_domain_auto_v1",
+  "rdkit_available": false,
+  "eval_smiles_filter_count": 910,
+  "candidate_counts": {
+    "auto_photo_scan": 192,
+    "auto_long_stereo": 5078,
+    "auto_document_context": 257,
+    "auto_exam_context": 134,
+    "auto_handdrawn_like": 46
+  },
+  "generated_counts": {
+    "auto_photo_scan": 40,
+    "auto_long_stereo": 16,
+    "auto_document_context": 24,
+    "auto_exam_context": 24,
+    "auto_handdrawn_like": 16
+  },
+  "total_generated": 120,
+  "bucket_caps": {
+    "auto_photo_scan": 40,
+    "auto_document_context": 24,
+    "auto_exam_context": 24,
+    "auto_handdrawn_like": 16,
+    "auto_long_stereo": 16
+  },
+  "notes": [
+    "These are automatic weak-domain replay samples generated from existing training images.",
+    "They are intended to reduce manual collection pressure while increasing domain variety.",
+    "Use together with any manually collected weak-domain pool for V2-2."
+  ]
+}

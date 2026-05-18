@@ -1,0 +1,43 @@
+{
+  "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\sft_materialized\\train_singleline_rw_messages.jsonl",
+  "total": 22807,
+  "unique_images": 17495,
+  "smiles_length": {
+    "min": 5,
+    "p50": 40,
+    "p90": 92,
+    "p95": 145,
+    "p99": 265,
+    "max": 793
+  },
+  "image_width": {
+    "min": 98,
+    "p50": 773,
+    "p90": 1024,
+    "p95": 1141,
+    "p99": 1815,
+    "max": 2644
+  },
+  "image_height": {
+    "min": 53,
+    "p50": 504,
+    "p90": 1024,
+    "p95": 1024,
+    "p99": 1046,
+    "max": 2547
+  },
+  "image_area": {
+    "min": 17628,
+    "p50": 360000,
+    "p90": 1048576,
+    "p95": 1048576,
+    "p99": 1606716,
+    "max": 4722138
+  },
+  "aspect_bins": {
+    "balanced": 12854,
+    "wide": 8355,
+    "very_wide": 1193,
+    "tall": 405
+  }
+}

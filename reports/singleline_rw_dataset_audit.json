@@ -1,0 +1,62 @@
+{
+  "train_path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\sft_materialized\\train_singleline_rw_messages.jsonl",
+  "eval_path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\eval\\ocsr_realworld_mixed_eval_v1p1\\annotations\\labels.jsonl",
+  "total": 22807,
+  "unique_ids": 17495,
+  "weighted_duplicate_id_count": 2828,
+  "max_id_repeat": 5,
+  "unique_outputs_or_canonical_smiles": 15606,
+  "source_counts": {
+    "real_world": 4140,
+    "molgrapher_synthetic": 4000,
+    "uspto": 5151,
+    "uspto30k_abbreviated": 1500,
+    "uob": 5016,
+    "uspto30k_large": 1500,
+    "uspto30k_clean": 1500
+  },
+  "difficulty_counts": {
+    "degraded_scan": 375,
+    "medium": 6236,
+    "photo": 785,
+    "medium_hard": 5151,
+    "abbreviated": 1500,
+    "large": 1500,
+    "scan": 795,
+    "hard": 2006,
+    "easy": 774,
+    "multi_grid": 235,
+    "clean": 1500,
+    "document_embed": 330,
+    "chinese_exam": 670,
+    "journal_fig": 330,
+    "page_level": 390,
+    "handwritten": 230
+  },
+  "policy_counts": {
+    "repeat_5": 4140,
+    "repeat_2": 4000,
+    "repeat_1": 10167,
+    "cap_1500": 4500
+  },
+  "missing_images_count": 0,
+  "unreadable_images_count": 0,
+  "bad_prompt_count": 0,
+  "empty_output_count": 0,
+  "non_smiles_output_count": 0,
+  "invalid_smiles_count": null,
+  "rdkit_available": false,
+  "eval_id_overlap_count": 0,
+  "eval_image_name_overlap_count": 0,
+  "eval_smiles_overlap_weighted_count": 0,
+  "examples": {
+    "missing_images": [],
+    "unreadable_images": [],
+    "bad_prompt": [],
+    "empty_outputs": [],
+    "non_smiles_outputs": [],
+    "invalid_smiles": [],
+    "eval_id_overlap": [],
+    "eval_image_name_overlap": []
+  }
+}

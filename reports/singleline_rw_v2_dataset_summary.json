@@ -1,0 +1,59 @@
+{
+  "strategy": "singleline_rw_v2_base_plus_manual_and_auto_weak_replay",
+  "base": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_singleline_rw_messages.jsonl",
+  "weak_pool": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_weak_domain_pool_messages.jsonl",
+  "auto_weak_pool": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_weak_domain_auto_messages.jsonl",
+  "output": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\sft_materialized\\train_singleline_rw_v2_messages.jsonl",
+  "total": 23047,
+  "rdkit_available": false,
+  "eval_smiles_filter_count": 910,
+  "skipped": {},
+  "source_counts": {
+    "real_world": 4140,
+    "molgrapher_synthetic": 4000,
+    "uspto": 5151,
+    "uspto30k_abbreviated": 1500,
+    "uob": 5016,
+    "uspto30k_large": 1500,
+    "uspto30k_clean": 1500,
+    "auto_weak_real_world": 208,
+    "auto_weak_uspto30k_large": 14,
+    "auto_weak_uspto30k_abbreviated": 8,
+    "auto_weak_uspto": 8,
+    "auto_weak_uspto30k_clean": 2
+  },
+  "weak_domain_weighted_counts": {
+    "auto_photo_scan": 80,
+    "auto_long_stereo": 32,
+    "auto_document_context": 48,
+    "auto_exam_context": 48,
+    "auto_handdrawn_like": 32
+  },
+  "policy_counts": {
+    "base_keep": 22807,
+    "auto_auto_photo_scan:repeat_2": 80,
+    "auto_auto_long_stereo:repeat_2": 32,
+    "auto_auto_document_context:repeat_2": 48,
+    "auto_auto_exam_context:repeat_2": 48,
+    "auto_auto_handdrawn_like:repeat_2": 32
+  },
+  "manual_weak_domain_repeat": {
+    "decimer_handdrawn": 4,
+    "real_world_photo_scan": 5,
+    "edu_exam": 5,
+    "document_page_context": 3,
+    "long_or_stereo": 3
+  },
+  "auto_weak_domain_repeat": {
+    "auto_photo_scan": 2,
+    "auto_document_context": 2,
+    "auto_exam_context": 2,
+    "auto_handdrawn_like": 2,
+    "auto_long_stereo": 2
+  },
+  "notes": [
+    "This builder keeps the V2-1 base training set and adds both manual weak-domain pool and auto-generated weak-domain replay.",
+    "It filters any record whose canonical assistant SMILES appears in evaluation labels.",
+    "Use this as the V2-2 dataset after generating auto replay and optionally importing public/private weak-domain candidates."
+  ]
+}

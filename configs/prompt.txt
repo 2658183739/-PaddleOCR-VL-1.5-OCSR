@@ -1,0 +1,1 @@
+OCR: Output only the canonical SMILES string for the molecule shown in the image.

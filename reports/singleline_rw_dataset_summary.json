@@ -1,0 +1,72 @@
+{
+  "strategy": "single_stage_real_weighted_lora_sft",
+  "input": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\sft_materialized\\train_phase3_messages.jsonl",
+  "output": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\sft_materialized\\train_singleline_rw_messages.jsonl",
+  "total": 22807,
+  "skipped_non_canonical_records": 0,
+  "skipped_eval_smiles_records_before_weighting": 397,
+  "skipped_unreadable_image_records_before_weighting": 1,
+  "eval_smiles_filter": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\eval\\ocsr_realworld_mixed_eval_v1p1\\annotations\\labels.jsonl",
+  "source_counts": {
+    "real_world": 4140,
+    "molgrapher_synthetic": 4000,
+    "uspto": 5151,
+    "uspto30k_abbreviated": 1500,
+    "uob": 5016,
+    "uspto30k_large": 1500,
+    "uspto30k_clean": 1500
+  },
+  "difficulty_counts": {
+    "degraded_scan": 375,
+    "medium": 6236,
+    "photo": 785,
+    "medium_hard": 5151,
+    "abbreviated": 1500,
+    "large": 1500,
+    "scan": 795,
+    "hard": 2006,
+    "easy": 774,
+    "multi_grid": 235,
+    "clean": 1500,
+    "document_embed": 330,
+    "chinese_exam": 670,
+    "journal_fig": 330,
+    "page_level": 390,
+    "handwritten": 230
+  },
+  "smiles_length_bins": {
+    "40_79": 8327,
+    "lt_40": 11270,
+    "80_119": 1560,
+    "ge_120": 1650
+  },
+  "policy_counts": {
+    "molgrapher_synthetic:repeat_2": 4000,
+    "real_world:repeat_5": 4140,
+    "uob:repeat_1": 5016,
+    "uspto:repeat_1": 5151,
+    "uspto30k_abbreviated:cap_1500": 1500,
+    "uspto30k_clean:cap_1500": 1500,
+    "uspto30k_large:cap_1500": 1500
+  },
+  "source_repeat": {
+    "real_world": 5,
+    "molgrapher_synthetic": 2,
+    "uob": 1,
+    "uspto": 1,
+    "decimer": 2
+  },
+  "source_cap": {
+    "uspto30k_clean": 1500,
+    "uspto30k_abbreviated": 1500,
+    "uspto30k_large": 1500
+  },
+  "notes": [
+    "Only canonical-SMILES message records are used.",
+    "EDU-CHEMC ssml_normed records are intentionally excluded from this one-line run.",
+    "Real-world and visual-robustness samples are upweighted by deterministic repetition.",
+    "DECIMER is configured for repeat_2 if present in the input dataset; it is absent from the current materialized phase3 file."
+  ],
+  "eval_output": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2\\data\\sft_materialized\\val_singleline_v1p1_messages.jsonl",
+  "eval_output_count": 770
+}

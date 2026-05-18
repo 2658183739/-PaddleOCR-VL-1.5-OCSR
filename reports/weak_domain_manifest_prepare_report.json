@@ -1,0 +1,42 @@
+{
+  "input_table": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\incoming\\weak_domain\\weak_domain_training_candidates.csv",
+  "output_manifest": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\manifests\\weak_domain_training_candidates.jsonl",
+  "output_image_root": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\incoming\\weak_domain\\normalized_images",
+  "total_records": 0,
+  "rdkit_available": false,
+  "source_counts": {},
+  "difficulty_counts": {},
+  "original_image_modes": {},
+  "skipped": {
+    "missing_image": 3
+  },
+  "examples": {
+    "missing_image": [
+      {
+        "line": 2,
+        "id": "private_handdrawn_000001",
+        "image": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\incoming\\weak_domain\\raw_images\\private_handdrawn\\private_handdrawn_000001.jpg"
+      },
+      {
+        "line": 3,
+        "id": "real_photo_000001",
+        "image": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\incoming\\weak_domain\\raw_images\\real_world_photo_scan\\real_photo_000001.jpg"
+      },
+      {
+        "line": 4,
+        "id": "edu_exam_000001",
+        "image": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V2-1\\data\\incoming\\weak_domain\\raw_images\\edu_exam\\edu_exam_000001.jpg"
+      }
+    ],
+    "bad_extension": [],
+    "unreadable_image": [],
+    "invalid_smiles": [],
+    "duplicate_id": []
+  },
+  "image_rules": {
+    "format": "RGB PNG",
+    "min_side": 96,
+    "max_side": 1800,
+    "pad": 8
+  }
+}

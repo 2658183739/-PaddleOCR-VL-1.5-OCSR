@@ -1,0 +1,5 @@
+Recognize the chemical structure in this image and output its canonical SMILES representation.
+Output the SMILES string for this molecule. Only output the SMILES, nothing else.
+OCR this chemical structure diagram. Return only the canonical SMILES string.
+Identify the molecule shown and provide its SMILES. Return SMILES only.
+Extract the molecular structure from this image as a canonical SMILES string.
