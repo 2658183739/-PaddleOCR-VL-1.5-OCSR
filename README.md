@@ -69,10 +69,10 @@
 
 | 模型 | canonical exact acc | token micro F1 | valid SMILES | mean Tanimoto |
 | --- | ---: | ---: | ---: | ---: |
-| PaddleOCR-VL-1.5 原版 | 待补充 | 待补充 | 待补充 | 待补充 |
+| PaddleOCR-VL-1.5 原版 | `0.00%` | `5.34%` | `32.59%` | `0.0021` |
 | 当前微调模型 | `32.86%` | `70.35%` | `71.84%` | `0.6992` |
 
-原版模型在 `canonical_main` 上的全量结果仍需补充到仓库中，但从 `mixed_v1p1` 的结果已经足以看出：任务定制是必要的，而不是可有可无的附加步骤。
+`canonical_main` 上的结果进一步说明，原版模型即使在更干净的主 OCSR benchmark 上，也无法稳定输出正确的 `canonical SMILES`。它能够产生一部分可被 RDKit 解析的字符串，但几乎没有 exact 命中，结构相似度也接近于零。相比之下，微调后的模型在 exact accuracy、合法 SMILES 比例和指纹相似度上都出现了本质性的跃迁。这说明当前微调并不是围绕单个 benchmark 做过拟合，而是在任务边界、输出约束和弱域适配三个层面共同发挥了作用。
 
 ### 3. 分来源观察
 
