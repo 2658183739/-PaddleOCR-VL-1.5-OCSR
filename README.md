@@ -1,213 +1,192 @@
 # PaddleOCR-VL-1.5-OCSR
 
-本项目面向化学结构式识别（Optical Chemical Structure Recognition, OCSR）任务，目标是将单张分子结构图像转换为唯一的 `canonical SMILES`。项目基于 `PaddleOCR-VL-1.5` 搭建，并围绕“统一标签空间、强化真实场景、建立可复现训练与评测闭环”三条主线展开。
+本项目聚焦于化学结构式识别（Optical Chemical Structure Recognition, OCSR）中的一个明确子任务：输入单张分子结构图像，输出唯一的 `canonical SMILES`。模型基于 `PaddleOCR-VL-1.5`，当前公开版本使用单阶段 `LoRA SFT` 进行任务定制，并在统一评测脚本下对主 benchmark 与真实世界补充 benchmark 进行对比评估。
 
-与很多泛化化学 OCR 项目不同，本项目从一开始就刻意避免把多种不兼容的标签体系硬拼在一起训练或混算。我们将主任务收缩到：
+这份说明文档主要把训练数据、评测集、结果对比和后续优化方向讲清楚。
+
+## 项目边界
+
+当前主线任务固定为：
 
 - 输入：单张分子结构图像
 - 输出：唯一的 `canonical SMILES`
 
-这样做的原因很直接。其一，训练目标更稳定；其二，评测结论更容易解释；其三，可以更清楚地区分“模型是否学会了化学结构识别”与“模型是否只是在输出与任务无关的化学文本、公式或其他表示”。
+因此，当前主训练线和主评测线都刻意不混入以下标签空间：
 
-## 一、项目现状
+- `ssml_normed`
+- `chemfig`
+- LaTeX 公式
+- 其他不与 `canonical SMILES` 一致的结构表示
 
-当前版本已经形成一条完整的工程链路，包括：
+这样做的原因很简单：如果标签空间不统一，训练目标会漂移，评测结果也会变得难以解释。当前项目选择先把主任务定义收窄，再围绕弱域与真实场景做补强。
 
-- 主训练集构建与审计
-- 主评测集与真实世界补充评测集构建
-- `PaddleOCR-VL-1.5` 原版模型直接测试
-- 微调后 merged export 模型测试
-- 开源代码、配置、报告与说明文档整理
+## 当前训练范式
 
-当前开源仓库中默认公开的是：
+当前项目使用的是单阶段 `LoRA SFT`，而不是多阶段课程学习、RLHF 或偏好优化。具体做法是：
 
-- 训练与评测脚本
-- 配置文件
-- 训练/评测说明
-- 数据构建与审计报告
-- 公开可说明的数据集组织方式
+- 基座模型：`PaddleOCR-VL-1.5`
+- 微调方式：`LoRA SFT`
+- 输出约束：只训练 `canonical SMILES`
+- 数据策略：公开主分布保底、真实弱域上权、复杂合成样本适度补充、干净合成子集限额
 
-默认不直接公开：
+当前还没有引入：
 
-- 私有训练图像
-- 全量 materialized 训练资产
-- 私有弱域原始采集数据
-- 重量级公开数据原始压缩包
+- DPO / ORPO / KTO
+- RLHF / RLAIF
+- 多模型自博弈
+- 结构级奖励函数
 
-## 二、为什么要微调
+对这个阶段的项目来说，先把标签空间、数据配比、弱域覆盖和评测口径做稳定，比过早引入更复杂的训练算法更重要。
 
-为了避免只报告“微调后结果”，我们对原版 `PaddleOCR-VL-1.5` 也做了直接测试。结果表明，原版模型虽然具备较强的通用视觉语言能力，但并不会自然地遵守 OCSR 主任务约束。它常见的输出包括：
+## 原版模型与微调模型结果
 
-- LaTeX / chem 式样文本
-- 图注、句子级描述
-- 与结构图无关的表述性文字
-- 非法或不闭合的伪 SMILES 字符串
+为了避免只报告微调后结果，这里同时给出 `PaddleOCR-VL-1.5` 原版模型和当前微调模型在同一套评测脚本下的结果。
 
-这说明，如果不做任务定制，原版模型并不能稳定承担“图像到 canonical SMILES”的化学结构识别职责。因此，微调并不是为了做小幅性能修补，而是为了把一个通用视觉语言模型拉到一个约束明确、可评测的化学结构识别任务上。
-
-## 三、基线模型与微调模型结果
-
-当前我们有两套核心结果：
-
-1. 原版 `PaddleOCR-VL-1.5` 直接测试结果
-2. 当前 `single-stage real-weighted LoRA SFT` 微调后的 merged export 模型结果
-
-### 1. `ocsr_realworld_mixed_eval_v1p1`
-
-这是当前最能体现“真实世界场景 + 教育场景补充”的 benchmark。
-
-| 模型 | canonical exact acc | token micro F1 | valid SMILES | mean Tanimoto |
-| --- | ---: | ---: | ---: | ---: |
-| PaddleOCR-VL-1.5 原版 | `0.00%` | `6.59%` | `30.78%` | `0.0027` |
-| 当前微调模型 | `33.77%` | `70.18%` | `75.84%` | `0.6849` |
-
-这个结果非常关键。它说明原版模型在当前 OCSR 主任务上几乎不能形成有效输出，而微调后的模型已经能够稳定输出大量合法 SMILES，并在 exact accuracy、token F1 和指纹相似度上获得数量级上的提升。
-
-### 2. `canonical_smiles_main_v1`
-
-这是当前最干净的主 OCSR benchmark，统一使用 `canonical_smiles` 标签空间。
+### 1. `canonical_smiles_main_v1`
 
 | 模型 | canonical exact acc | token micro F1 | valid SMILES | mean Tanimoto |
 | --- | ---: | ---: | ---: | ---: |
 | PaddleOCR-VL-1.5 原版 | `0.00%` | `5.34%` | `32.59%` | `0.0021` |
 | 当前微调模型 | `32.86%` | `70.35%` | `71.84%` | `0.6992` |
 
-`canonical_main` 上的结果进一步说明，原版模型即使在更干净的主 OCSR benchmark 上，也无法稳定输出正确的 `canonical SMILES`。它能够产生一部分可被 RDKit 解析的字符串，但几乎没有 exact 命中，结构相似度也接近于零。相比之下，微调后的模型在 exact accuracy、合法 SMILES 比例和指纹相似度上都出现了本质性的跃迁。这说明当前微调并不是围绕单个 benchmark 做过拟合，而是在任务边界、输出约束和弱域适配三个层面共同发挥了作用。
+### 2. `ocsr_realworld_mixed_eval_v1p1`
 
-### 3. 分来源观察
+| 模型 | canonical exact acc | token micro F1 | valid SMILES | mean Tanimoto |
+| --- | ---: | ---: | ---: | ---: |
+| PaddleOCR-VL-1.5 原版 | `0.00%` | `6.59%` | `30.78%` | `0.0027` |
+| 当前微调模型 | `33.77%` | `70.18%` | `75.84%` | `0.6849` |
 
-当前微调模型在不同来源上的表现明显不均衡：
+从这两组结果可以看出，原版 `PaddleOCR-VL-1.5` 在 OCSR 这个任务上还不能直接使用。它常见的输出是 LaTeX、图注、自然语言描述，或者无法闭合的伪 SMILES。当前微调的作用不是做小幅修补，而是把一个通用视觉语言模型拉到“图像到 canonical SMILES”这个明确任务上。
 
-- `uob`：相对较强
-- `uspto`：可用，但与公开强基线仍有明显差距
-- `real_world`：偏弱
-- `decimer`：手绘结构明显偏弱
-- `edu_chemc`：教育场景 canonical 化子集仍偏弱
+当前微调模型的分来源表现仍然不均衡：
 
-这说明当前模型已经是一个有效基线，但远未完成弱域收敛，也尚未达到公开 OCSR 强模型水平。
+- `uob` 相对较强
+- `uspto` 可用，但与公开强基线仍有差距
+- `real_world` 偏弱
+- `decimer` 手绘结构偏弱
+- `edu_chemc` 教育场景 canonical 化子集仍偏弱
 
-## 四、训练数据来源与构成
+## 训练数据来源与构成
 
-当前主训练集由 `train_phase3_messages.jsonl` 经过统一筛选、去泄漏、重权重和限额后生成：
+当前主训练集来自：
 
 ```text
 V2/data/sft_materialized/train_singleline_rw_messages.jsonl
 ```
 
-训练集规模如下：
+当前统计：
 
 - 总样本：`22807`
 - 唯一图片：`17495`
 - 唯一 canonical SMILES：`15606`
 
-当前训练集由以下来源组成：
+这里的“唯一图片”指的是**不同的图像文件路径数**，而不是 message 条数。因为当前训练集中存在确定性重复加权，同一张图像可能因为上权策略出现多次，所以总样本数大于唯一图片数。这不是数据脏乱，而是当前加权策略的直接结果。
 
-| 来源 | 数量 | 角色 |
-| --- | ---: | --- |
-| `uspto` | 5151 | 标准 printed / patent-style 主分布 |
-| `uob` | 5016 | 标准 printed OCSR 主分布 |
-| `real_world` | 4140 | 真实拍照、扫描、页面嵌入、手写等弱域补强 |
-| `molgrapher_synthetic` | 4000 | 合成复杂结构与视觉扰动补充 |
-| `uspto30k_clean` | 1500 | 干净补充分布 |
-| `uspto30k_abbreviated` | 1500 | 缩写/简写场景补充 |
-| `uspto30k_large` | 1500 | 大尺寸/复杂结构补充 |
+训练集由 7 部分来源组成：
 
-从来源结构上看，当前训练集并不是简单叠加更多样本，而是围绕“主分布覆盖 + 弱域补强 + 过拟合抑制”这三件事来组织的。
+| 来源 | 当前数量 | 来源性质 | 在训练中的角色 | 标签处理方式 |
+| --- | ---: | --- | --- | --- |
+| `uob` | 5016 | 公开 benchmark | 标准 printed OCSR 主分布 | 结构标签统一后用 RDKit canonicalize，无法稳定落成 canonical SMILES 的样本不进入主训练线 |
+| `uspto` | 5151 | 公开 benchmark | 标准 printed / patent-style 主分布 | 同 `uob`，统一 `canonical_smiles` 后进入训练 |
+| `real_world` | 4140 | 项目自建补充层 | 弱域补强，覆盖 photo/scan/document/page/handwritten/chinese_exam 等 | 优先继承已知结构标签，再统一 canonicalize，不依赖从噪声图像重新反推标签 |
+| `molgrapher_synthetic` | 4000 | 公开或可追溯合成结构图来源 | 复杂结构与视觉扰动补充 | 保留结构标签，统一转 canonical SMILES，剔除非主任务格式 |
+| `uspto30k_clean` | 1500 | 公开结构集合再组织子集 | 干净补充分布 | 统一 canonicalize，限额保留，避免 clean 样本过量 |
+| `uspto30k_abbreviated` | 1500 | 公开结构集合再组织子集 | 缩写/简写结构补充 | 统一 canonicalize，保留缩写风格差异 |
+| `uspto30k_large` | 1500 | 公开结构集合再组织子集 | 大尺寸 / 长分子 / 稠密结构补充 | 统一 canonicalize，限额保留，补足结构和图像复杂度长尾 |
 
-### 1. 主分布样本
+需要特别说明的是，这 7 部分来源并不等于“7 个彼此独立、命名清晰的公开数据集”。其中有些可以直接对应到公开 benchmark，有些则更准确地说是**基于公开结构集合再次组织得到的项目内部训练子集**。为了避免误导，这里按目前仓库中能够明确追溯的证据做出保守说明：
 
-`uob` 与 `uspto` 提供标准公开 benchmark 风格样本。它们的作用是维持模型对标准 printed chemistry 图像的基础识别能力，保证模型不会因为后续大量真实噪声或复杂增强而丢掉主 benchmark 上的基本能力。
+| 当前训练来源名 | 可直接说明的公开来源 | 当前最稳妥的写法 |
+| --- | --- | --- |
+| `uob` | UOB OCSR Benchmark | 可直接写为公开 benchmark 主分布来源 |
+| `uspto` | USPTO OCSR Benchmark | 可直接写为公开 benchmark 主分布来源 |
+| `molgrapher_synthetic` | MolGrapher synthetic structure image source | 当前项目实际使用的是本地整理后的 synthetic 子集，而不是原始全集直接消费 |
+| `uspto30k_clean` | 公开 patent-style 结构集合的 clean 子集 | 更准确地写成“基于公开结构集合再组织得到的 clean 训练子集” |
+| `uspto30k_abbreviated` | 公开 patent-style 结构集合的 abbreviated 子集 | 更准确地写成“基于公开结构集合再组织得到的 abbreviated 训练子集” |
+| `uspto30k_large` | 公开 patent-style 结构集合的 large 子集 | 更准确地写成“基于公开结构集合再组织得到的 large 训练子集” |
+| `real_world` | 无法对应单一公开数据集名 | 应写成项目自建的 real-world supplementary robustness layer，而不是某一个现成公开 benchmark |
 
-### 2. 真实世界弱域样本
+这个组合不是平均拼接，而是按以下逻辑组织：
 
-`real_world` 并不是一个单一官方 benchmark 名称，而是项目内部整理的、面向真实使用环境的补充层。它覆盖：
+1. `uob/uspto` 负责维持标准 OCSR 主分布；
+2. `real_world` 负责补足真实场景弱域；
+3. `molgrapher_synthetic` 与 `uspto30k_*` 负责在结构复杂度、图像尺寸和表达形式上扩展训练边界；
+4. 干净 synthetic 子集做限额，避免模型过度偏向渲染图风格。
 
-- `photo`
-- `scan`
-- `degraded_scan`
-- `document_embed`
-- `page_level`
-- `chinese_exam`
-- `handwritten`
-- `journal_fig`
-- `multi_grid`
+### 公开来源的标签清洗方式
 
-这一层的存在是当前训练线的核心改动之一。因为在比赛与真实落地场景中，模型最终掉分最多的往往不是干净 printed 图，而是：
+对于 `uob`、`uspto` 以及来自公开结构集合的 synthetic / patent-style 子集，当前训练线并不是原样消费原始标签，而是统一经过以下处理：
 
-- 手机拍照
-- 扫描退化
-- 图文混排
-- 试卷与教学图
-- 手写或半手写结构
+1. 读取原始结构标签；
+2. 将主字段统一映射到 `canonical_smiles`；
+3. 使用 RDKit 做 canonicalization；
+4. 清除空标签、无法解析标签以及不在主任务边界内的标签；
+5. 最终转为统一的 `messages` 训练格式。
 
-### 3. 合成复杂样本
+也就是说，当前主训练线的关键不在于“数据来自公开 benchmark”，而在于“公开来源在进入训练前已经做了统一标签清洗和任务边界裁剪”。
 
-`molgrapher_synthetic` 与 `uspto30k_*` 子集的作用是补充：
+## 训练数据清洗、标注与质量控制
 
-- 更长的分子
-- 更复杂的结构布局
-- 更大尺寸图像
-- 缩写和变体表达
+当前训练线的数据处理不是手工维护的松散拼盘，而是一条脚本化、可复现的数据工程链。
 
-但这部分并没有无限放大，而是通过权重与限额控制，避免模型过度向 synthetic-clean 图像风格偏移。
+### 标签空间清洗
 
-## 五、为什么这样配比
+进入主训练线前，所有样本都要经过标签空间清洗。当前明确不进入主训练线的标签包括：
 
-当前数据配比不是平均采样，也不是简单地“哪个数据多就用哪个”，而是按以下逻辑设计：
+- `ssml_normed`
+- `chemfig`
+- LaTeX 公式
+- 其他不与 `canonical SMILES` 一致的结构表示
 
-### 1. `uob/uspto` 保底
+进入主训练线的标签，最终都要统一为 `canonical SMILES`。
 
-这两类数据维持主任务分布，使模型在标准 OCSR benchmark 上有可比较性。
+### 评测集同分子过滤
 
-### 2. `real_world` 上权
+在构建：
 
-`real_world` 被显式上权，是因为这部分代表比赛最真实、最难的弱域。当前构建策略中：
+```text
+V2/data/sft_materialized/train_singleline_rw_messages.jsonl
+```
+
+时，当前训练脚本会显式过滤 `ocsr_realworld_mixed_eval_v1p1` 中已出现的 canonical SMILES。当前构建摘要显示：
+
+- 被过滤的评测重合样本：`397`
+- 被过滤的不可读图像：`1`
+
+这一步的意义是避免模型通过同分子记忆获得虚高验证结果。
+
+### 加权与限额
+
+当前构建策略中：
 
 - `real_world`: `repeat 5`
-
-这意味着相同结构下，真实场景样本在训练时被更频繁看到，用以抵消干净 printed 图在规模和稳定性上的天然优势。
-
-### 3. `molgrapher_synthetic` 适度上权
-
 - `molgrapher_synthetic`: `repeat 2`
-
-它的作用不是替代真实样本，而是补充更复杂的结构和更丰富的视觉扰动。
-
-### 4. `uspto30k_*` 限额
-
+- `uob`: `repeat 1`
+- `uspto`: `repeat 1`
 - `uspto30k_clean`: `cap 1500`
 - `uspto30k_abbreviated`: `cap 1500`
 - `uspto30k_large`: `cap 1500`
 
-这一步是为了避免模型因为过度看到“干净、结构规整、生成风格一致”的图像，而逐渐失去对真实图像扰动的适应能力。
+这意味着当前训练集不是按“条数越多越重要”，而是显式承认真实弱域的训练价值更高。
 
-## 六、训练数据清洗与质量控制
+### 项目补充层的标注方式
 
-当前训练集并不是手工维护的松散文件集合，而是通过脚本化构建和审计得到的。
+`real_world` 这部分并不完全依赖人工从复杂图像反推结构，而是尽量采用“已知结构 -> 派生图像”的继承式标注方式：
 
-### 1. 标签空间清洗
+1. 先确定样本对应的已知结构标签；
+2. 再进行页面嵌入、图像退化、拍照风格构造或其他弱域生成；
+3. 图像形成后直接继承原结构标签；
+4. 最终统一做 `canonical_smiles` 规范化。
 
-主训练线只保留 `canonical SMILES`：
+这种方案的优点是：
 
-- 不混入 `ssml_normed`
-- 不混入 `chemfig`
-- 不混入 LaTeX 公式
-- 不混入表格或其他结构化标签空间
+- 比完全人工从弱域图像回推标签更稳定；
+- 更适合批量构造 `photo / scan / chinese_exam / document_embed` 一类样本；
+- 更容易和公开 benchmark 主分布保持统一标签空间。
 
-这样做是为了防止任务定义漂移，也便于评测口径统一。
+### 审计结果
 
-### 2. 评测集同分子泄漏过滤
-
-当前训练集构建时，会显式过滤 `ocsr_realworld_mixed_eval_v1p1` 中已出现的 canonical SMILES。当前摘要显示：
-
-- 被过滤的评测重合样本：`397`
-- 不可读图像过滤：`1`
-
-这一步的意义非常直接：避免模型靠同分子记忆获得虚高验证结果。
-
-### 3. 审计结果
-
-审计脚本会检查：
+当前审计脚本检查：
 
 - 图像是否存在
 - 图像是否可读
@@ -216,181 +195,265 @@ V2/data/sft_materialized/train_singleline_rw_messages.jsonl
 - 是否混入非 SMILES 输出
 - 是否与评测集发生 ID/图片名/canonical SMILES 重叠
 
-当前主训练线审计结果：
 
-- 缺失图片：`0`
-- 不可读图片：`0`
-- bad prompt：`0`
-- 空输出：`0`
-- 非 SMILES 输出：`0`
-- 与 `v1p1` ID 重叠：`0`
-- 与 `v1p1` 图片名重叠：`0`
-- 与 `v1p1` canonical SMILES 重叠：`0`
+当前训练集统计结果：
 
-这说明当前训练集至少在结构层面没有明显错误。
+| 统计项 | 数值 |
+| --- | --- |
+| SMILES 长度 p50/p90/p95/p99/max | `40 / 92 / 145 / 265 / 793` |
+| 图片宽度 p50/p95/max | `773 / 1141 / 2644` |
+| 图片高度 p50/p95/max | `504 / 1024 / 2547` |
+| 图片面积 p50/p95/max | `360000 / 1048576 / 4722138` |
+| 图像形态 | `balanced=12854, wide=8355, very_wide=1193, tall=405` |
 
-## 七、训练数据统计特征
+这些统计和审计结果说明，当前训练线已经形成了基础的结构性质量控制闭环。
 
-当前训练集统计如下：
+## 评测集来源与修改方向
 
-- SMILES 长度：
-  - `p50=40`
-  - `p90=92`
-  - `p95=145`
-  - `p99=265`
-  - `max=793`
-- 图片宽度：
-  - `p50=773`
-  - `p95=1141`
-  - `max=2644`
-- 图片高度：
-  - `p50=504`
-  - `p95=1024`
-  - `max=2547`
-- 图片面积：
-  - `p50=360000`
-  - `p95=1048576`
-  - `max=4722138`
-- 图像形态：
-  - `balanced=12854`
-  - `wide=8355`
-  - `very_wide=1193`
-  - `tall=405`
+当前项目的评测集不是单层单口径数据集，而是一个分层评测体系。
 
-这些统计说明：
+### 1. 主 OCSR benchmark：`canonical_smiles_main_v1`
 
-1. 当前训练集不是单一尺寸；
-2. 输出长度虽然存在长尾，但主分布仍然适合当前 `4096` 的上下文长度设定；
-3. 图像长宽比差异明显，说明页面型、宽图型和常规 crop 图都覆盖了一定比例。
-
-## 八、训练内验证集的选择
-
-当前训练内验证集为：
+路径：
 
 ```text
-V2/data/sft_materialized/val_singleline_v1p1_messages.jsonl
+V2/data/eval/canonical_smiles_main_v1/
 ```
 
-它对应的真实 benchmark 来源是：
+规模：
 
-```text
-V2/data/eval/ocsr_realworld_mixed_eval_v1p1/annotations/labels.jsonl
-```
+- 总量：`767`
 
-这意味着当前 checkpoint 选择不是单纯追求干净主 benchmark 最优，而是更偏向：
-
-- 真实世界场景
-- 教学/文档补充场景
-- 主 benchmark 之外的弱域表现
-
-这是一个刻意的设计，而不是偶然选择。
-
-## 九、评测集是如何修改的
-
-评测集的修改不是“简单加更多图”，而是围绕**主 benchmark 清晰化**和**真实世界解释性增强**展开的。
-
-### 1. 主 OCSR 核心评测：`canonical_smiles_main_v1`
-
-这是当前最干净的主 benchmark，包含：
+来源构成：
 
 - `decimer`: 150
 - `uob`: 200
 - `uspto`: 200
 - `real_world`: 217
 
-它的作用是：
+其中：
 
-- 作为主 OCSR 分数来源；
-- 用统一的 `canonical_smiles` 标签空间评估模型；
-- 清晰观察标准 benchmark 与真实世界补充来源之间的差距。
+- `decimer`：公开手绘 benchmark，用来表征真实手绘结构识别能力；
+- `uob/uspto`：公开主 benchmark，用来维持主 OCSR 可比性；
+- `real_world`：项目补充层，用于补足标准 benchmark 对真实弱域覆盖不足的问题。
 
-### 2. 真实世界混合评测：`ocsr_realworld_mixed_eval_v1p1`
+如果需要对外明确写清来源边界，建议用下面的表述：
 
-这个版本不是原始拼接，而是经过明确清洗和改造。
+| 当前评测来源名 | 当前建议表述 | 性质 |
+| --- | --- | --- |
+| `decimer` | DECIMER Hand-drawn Molecule Images dataset | 公开手绘 benchmark |
+| `uob` | UOB OCSR Benchmark | 公开 benchmark |
+| `uspto` | USPTO OCSR Benchmark | 公开 benchmark |
+| `real_world` | project-built synthetic-realistic robustness subset | 项目补充层 |
+
+标签检查方案：
+
+1. 检查图像存在性与可读性；
+2. 统一 `ground_truth.smiles` 字段；
+3. 使用 RDKit 做 canonicalization 检查；
+4. 清除明显异常、空标签或不可解析标签；
+5. 统一到主任务脚本可直接使用的 schema。
+
+这里需要强调的是：主评测集中的公开 benchmark 样本并不是简单下载后直接使用，而是在正式进入评测层前统一做了字段规范化、标签检查、RDKit canonicalization 检查以及目录结构整理。
+
+### 2. 清洗层：`canonical_smiles_curated_v2`
+
+路径：
+
+```text
+V2/data/eval/canonical_smiles_curated_v2/
+```
+
+这是当前 mixed 评测集的主干来源之一。当前已知清洗动作包括：
+
+1. 从 `canonical_smiles_main_v1` 出发；
+2. 对图像模式风险样本做清理；
+3. 被移除的 `150` 条样本全部来自 `decimer`；
+4. 清洗后保留：
+   - `uob`: 200
+   - `uspto`: 200
+   - `real_world`: 217
+
+也就是说，`canonical_curated_v2` 的作用不是代替主 benchmark，而是为 mixed benchmark 提供一个更稳定的 canonical 主层。
+
+### 3. 混合评测集：`ocsr_realworld_mixed_eval_v1p1`
+
+路径：
+
+```text
+V2/data/eval/ocsr_realworld_mixed_eval_v1p1/
+```
+
+规模：
+
+- 总量：`770`
 
 构造链路为：
 
-1. 从 `canonical_smiles_main_v1` 出发；
-2. 形成 `canonical_smiles_curated_v2`，清理图像模式风险样本；
-3. 再加入 `edu_chemc` 的 canonical 化子集，形成 mixed eval；
-4. 对 `edu_chemc` 进行去重与自动回填，得到 `v1p1`。
+1. `canonical_smiles_main_v1`
+2. `canonical_smiles_curated_v2`
+3. `ocsr_realworld_mixed_eval_v1`
+4. `ocsr_realworld_mixed_eval_v1p1`
 
-### 3. 具体修改方向
+这个版本的关键优化点在于 `edu_chemc` 子集的去重与回填，而不是简单增加样本数量。
 
-#### A. 保留主任务口径
+### 4. `edu_chemc` 子集
 
-主任务仍然围绕 `canonical_smiles`，不把不兼容标签空间强行混成一个总分。
+`edu_chemc` 当前不是完全由项目组自行重新采集构建的，而是基于本地整理的 `EDU-CHEMC` 测试子集，经过转换、去重与回填形成的教育场景补充 benchmark。
 
-#### B. 提高真实世界覆盖
+更准确的描述方式应当是：
 
-通过 `real_world` 和 `edu_chemc` 的加入，显式覆盖：
+> 教育场景中的手写/教学结构图当前主要来自本地整理的 `EDU-CHEMC` 测试子集，而不是完全由项目组自行重新采集。当前工作的重点在于统一标签口径、提高唯一分子覆盖度，并构造成与主 OCSR 结果可以并列解释的补充 benchmark。
 
-- `photo`
-- `scan`
-- `degraded_scan`
-- `document_embed`
-- `page_level`
-- `chinese_exam`
-- `handwritten`
-- `journal_fig`
-- `multi_grid`
+因此，对外说明时更稳妥的写法是：
 
-#### C. 提高唯一分子覆盖
+- 主 benchmark 层中的 `uob / uspto / decimer` 主要来自公开 benchmark；
+- `real_world` 主要来自项目补充层；
+- 教育场景中的 `edu_chemc` 则主要来自本地整理的 EDU-CHEMC 测试子集，而不是完全重新人工采集。
 
-在 `edu_chemc` 部分，`v1p1` 做了关键修改：
+### 5. EDU 子集的关键修改
 
-- 去重前：`153` 张图，对应 `97` 个唯一分子
-- 去重后：`153` 张图，对应 `153` 个唯一分子
+在 `ocsr_realworld_mixed_eval_v1` 中：
 
-做法是：
+- 总量：`153`
+- 唯一分子数：`97`
 
-1. 先按 exact canonical SMILES 去重；
-2. 再从 `edu_chemc_convertibility_trial_v1` 中回填新的唯一分子；
-3. 保持总量不变，但显著提高唯一分子覆盖。
+在 `v1p1` 中，做了以下处理：
 
-这样做的意义是：
+1. 按 exact canonical SMILES 去重；
+2. 每组保留 1 条，其余重复样本移除；
+3. 从 `edu_chemc_convertibility_trial_v1` 中自动转换并回填新的唯一分子；
+4. 保持总量仍为 `153`，但唯一分子提升为 `153`。
 
-- 让 mixed eval 更像泛化测试，而不是重复结构测试；
-- 降低某些 EDU 分子被重复采样带来的偏置。
+即：
 
-## 十、当前局限
+| 阶段 | 图像数 | 唯一分子数 |
+| --- | ---: | ---: |
+| 去重前 | `153` | `97` |
+| 去重后并回填 | `153` | `153` |
 
-当前项目已经形成可复现的工程闭环，但仍有明显局限：
+这里真正的优化不是“扩量”，而是：
 
-1. `decimer / handdrawn` 类样本在主训练线中仍不充分；
-2. 真实世界私有采集图仍偏少；
-3. `edu_chemc` 主标签空间没有直接进入主训练线，而更多用于评测与专项转换；
-4. 当前弱域补强仍需更多手绘、拍照、扫描和教育题面型数据。
+- 去掉重复分子偏置
+- 提升 mixed benchmark 的泛化测试属性
 
-这些局限也是下一阶段继续补训练数据与补评测集的主要方向。
+### 6. EDU 标签转换方案
 
-## 十一、项目意义
+当前 `edu_chemc` 的 canonical 化不是人工逐条猜测，而是通过可复现的自动流程完成：
 
-这个项目当前最有价值的部分，不是“已经达到公开最强精度”，而是：
+1. 读取 `ssml_normed`
+2. 提取单个 `chemfig` 块
+3. 做本地 token / branch / reconnect 解析
+4. 映射到最小可支持的原子/片段集合
+5. 构建 RDKit 分子
+6. `SanitizeMol`
+7. 输出 `canonical_smiles`
 
-1. 把 OCSR 主任务统一到了 `canonical SMILES`；
-2. 建立了可复现的数据构建、清洗和审计流程；
-3. 明确识别出真实世界弱域：
-   - `decimer`
-   - `real_world`
-   - `edu_chemc`
-4. 为下一步弱域增强、自动 replay、私有评测采集和受控生成评测集打好了工程基础。
+候选过滤规则包括：
 
-## 十二、代码与目录
+- 单 `chemfig`
+- 无反应箭头
+- 无 `+` 多组分
+- `ssml_len <= 220`
+- `max_side <= 768`
+- 无显式变量占位
+- 无 `circle`
+- 无复杂 ring reconnect
 
-当前仓库的核心目录如下：
+对转换失败样本：
 
-- `configs/`：训练、导出、prompt 配置
-- `scripts/`：数据构建、审计、推理、评测与弱域工具链
-- `runbooks/`：训练线与数据构建说明
-- `reports/`：统计与审计结果
+- 直接丢弃
+- 不做猜测性修补
+- 不手工补 SMILES
 
-此外，仓库还包含：
+### 7. 当前质检机制
 
-- 弱域评测构建与审计工具
-- 弱域训练池导入工具
-- 自动弱域 replay 工具
-- 从 SMILES 受控生成评测图的工具
-- 公开数据源下载与 seed 采样说明
+当前评测体系中的质量控制，已经不只是“基于规则优化分布”，至少包括以下几个层次：
 
-这些补充能力使当前仓库不仅能复现实验，还能继续支持后续迭代。
+#### 结构性 QC
+
+- 清理实验性候选层与中间目录
+- 删除无效文件
+- 保证 `annotations/` 与 `images/` 对齐
+- 保证 `stats.json` 与样本规模一致
+- 保证主任务与教育场景标签空间隔离
+
+#### 标签层 QC
+
+- 主 OCSR 核心集统一为 `canonical_smiles`
+- EDU 层保留原 `ssml_normed` 候选形式，但在 mixed benchmark 中只使用经过稳定转换和去重后的 canonical 子集
+- 通过 RDKit 做 canonicalization 和可解析性检查
+
+#### 去重与唯一分子控制
+
+- `edu_chemc` 做 exact canonical 去重
+- 用 trial 候选池回填，保持总量不变并提高唯一分子覆盖度
+
+#### 泄漏边界
+
+- 训练集构建时显式过滤 `v1p1` 中已出现的 canonical SMILES
+
+换句话说，当前评测体系的质量控制并不是只有“规则调分布”，而是已经形成了：
+
+- 结构性整理
+- 标签层检查
+- canonical 去重
+- EDU 子集回填
+- 训练/评测泄漏边界控制
+
+这几层叠加后的结果，才构成当前 mixed 评测集的实质优化。
+
+## 为什么当前数据集部分还有提升空间
+
+现在最明显的短板不是“完全没有数据”，而是“证据链还不够像正式数据工程”。如果想把数据集相关评分继续提升，最有效的不是再盲目堆样本，而是把以下材料补齐：
+
+1. 每个来源的来源表
+2. 训练/评测标签来源链
+3. 可视化抽检页
+4. 人工复核记录
+5. 统计图表
+6. QC 表格
+
+只要把这些内容补齐，当前的数据集部分从现在这档继续往上走是现实的。
+
+## 后续怎么继续提高分数
+
+### 先补文档与证据链
+
+现在最容易加分的不是再训，而是补：
+
+- 数据来源表
+- 质检表
+- 抽检页
+- base vs fine-tuned 对比
+
+### 再补弱域
+
+如果继续训，优先补：
+
+- `decimer / handwritten`
+- `real_world / photo / scan`
+- `edu_exam / chinese_exam`
+- `page_level / document_embed`
+
+### 可以引入的“agent 手法”
+
+当前最值得做的 agent 化，不在训练损失函数，而在：
+
+1. 数据侧：
+   - 错误样本挖掘
+   - 去重
+   - 泄漏检查
+   - 弱域 replay 候选池生成
+
+2. 评测侧：
+   - 自动生成分来源对比表
+   - 自动生成抽检清单
+   - 自动输出 error buckets
+
+3. 推理侧：
+   - 多候选生成
+   - RDKit 合法性筛选
+   - 候选重排
+
+这类改造比当前直接跳向 RLHF/DPO 更划算，也更符合当前 OCSR 项目的成熟度。
