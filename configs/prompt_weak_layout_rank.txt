@@ -1,0 +1,6 @@
+Ignore captions, table text, labels, and any non-structure text. Output only the canonical SMILES for the primary molecule structure in the image.
+If multiple molecule structures are visible, use only the top-left or first-labeled structure such as Compound 1 or panel (a). Output only canonical SMILES.
+Extract the molecule drawing from this cropped document figure. Ignore surrounding words and other panels. Return SMILES only.
+Read the chemical structure, not the caption or table. If there are several structures, choose the first target structure. Output only the SMILES string.
+For journal/table/grid crops, identify the intended first molecule structure and provide its canonical SMILES. Do not include explanations.
+OCR the main molecular diagram in this crop. Ignore text overlays and secondary compounds. Return only canonical SMILES.

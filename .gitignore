@@ -18,3 +18,16 @@ patcid/
 
 *.zip
 *.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.tar
+*.tar.gz
+*.7z
+*.rar
+
+.tmp_*
+*.pem
+*.key
+*.log

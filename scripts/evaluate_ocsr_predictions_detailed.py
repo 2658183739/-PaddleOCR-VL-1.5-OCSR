@@ -4,8 +4,21 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from rdkit import Chem, DataStructs
+from rdkit import Chem, DataStructs, RDLogger
 from rdkit.Chem import AllChem
+
+try:
+    from rdkit.Chem import rdFingerprintGenerator
+except Exception:
+    rdFingerprintGenerator = None
+
+
+RDLogger.DisableLog("rdApp.*")
+MORGAN_GENERATOR = (
+    rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=2048)
+    if rdFingerprintGenerator is not None
+    else None
+)
 
 
 SMILES_TOKEN_PATTERN = re.compile(
@@ -116,8 +129,12 @@ def fingerprint_tanimoto(gt_smiles: str, pred_smiles: str):
     pred_mol = Chem.MolFromSmiles(pred_smiles) if pred_smiles else None
     if gt_mol is None or pred_mol is None:
         return None
-    gt_fp = AllChem.GetMorganFingerprintAsBitVect(gt_mol, radius=2, nBits=2048)
-    pred_fp = AllChem.GetMorganFingerprintAsBitVect(pred_mol, radius=2, nBits=2048)
+    if MORGAN_GENERATOR is not None:
+        gt_fp = MORGAN_GENERATOR.GetFingerprint(gt_mol)
+        pred_fp = MORGAN_GENERATOR.GetFingerprint(pred_mol)
+    else:
+        gt_fp = AllChem.GetMorganFingerprintAsBitVect(gt_mol, radius=2, nBits=2048)
+        pred_fp = AllChem.GetMorganFingerprintAsBitVect(pred_mol, radius=2, nBits=2048)
     return float(DataStructs.TanimotoSimilarity(gt_fp, pred_fp))
 
 

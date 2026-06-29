@@ -1,0 +1,97 @@
+{
+  "date": "2026-06-27",
+  "baseline_reference": {
+    "current_stable_reward_m0": {
+      "combined_1344": 0.35044642857142855,
+      "canonical_smiles_main_v1": 0.4589308996088657,
+      "weak_domain_v2": 0.20623916811091855,
+      "region_panel_770": 0.43766233766233764
+    },
+    "previous_local_group_best": {
+      "combined_1344": 0.3541666666666667,
+      "canonical_smiles_main_v1": 0.46153846153846156,
+      "weak_domain_v2": 0.21143847487001732,
+      "region_panel_770": 0.44025974025974024
+    }
+  },
+  "smoke_results": {
+    "cross_run_pair_e5_external_1344": 0.27306547619047616,
+    "cross_run_pair_e5_external_region770": 0.3922077922077922,
+    "combined_pair_e80_external_1344": 0.2849702380952381,
+    "combined_pair_e80_external_region770": 0.4116883116883117,
+    "listwise_external_1344": 0.3333333333333333,
+    "listwise_external_region770": 0.44675324675324674,
+    "listwise_route_best_1344": {
+      "name": "source_difficulty_task_type",
+      "canonical_exact": 0.35639880952380953,
+      "raw_exact": 0.3013392857142857,
+      "mean_tanimoto": 0.5656489384415735,
+      "canonical_panel": 0.46153846153846156,
+      "weak_panel": 0.21663778162911612
+    }
+  },
+  "recommended_artifacts": {
+    "combined_1344_best_route_prediction": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\pred_route_source_difficulty_task_type.jsonl",
+    "combined_1344_best_route_report": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\report_route_source_difficulty_task_type.json",
+    "region770_listwise_prediction": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\pred_best_region770.jsonl",
+    "region770_listwise_report": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\report_best_region770.json",
+    "listwise_checkpoint": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\reward_head.pt",
+    "listwise_train_report": "V2-1\\reports\\candidate_choice_reward_smoke_20260627\\listwise_smoke_v1\\listwise_reward_head_report.json"
+  },
+  "route_eval_summary": [
+    {
+      "name": "difficulty",
+      "canonical_exact": 0.35342261904761907,
+      "raw_exact": 0.3005952380952381,
+      "mean_tanimoto": 0.56403739575444,
+      "canonical_panel": 0.4602346805736636,
+      "weak_panel": 0.21143847487001732
+    },
+    {
+      "name": "difficulty_task_type",
+      "canonical_exact": 0.3549107142857143,
+      "raw_exact": 0.3013392857142857,
+      "mean_tanimoto": 0.5644144811855402,
+      "canonical_panel": 0.46153846153846156,
+      "weak_panel": 0.21317157712305027
+    },
+    {
+      "name": "source",
+      "canonical_exact": 0.35342261904761907,
+      "raw_exact": 0.29836309523809523,
+      "mean_tanimoto": 0.5628692320477874,
+      "canonical_panel": 0.4589308996088657,
+      "weak_panel": 0.21317157712305027
+    },
+    {
+      "name": "source_difficulty",
+      "canonical_exact": 0.3556547619047619,
+      "raw_exact": 0.3005952380952381,
+      "mean_tanimoto": 0.5653647258978055,
+      "canonical_panel": 0.4602346805736636,
+      "weak_panel": 0.21663778162911612
+    },
+    {
+      "name": "source_difficulty_task_type",
+      "canonical_exact": 0.35639880952380953,
+      "raw_exact": 0.3013392857142857,
+      "mean_tanimoto": 0.5656489384415735,
+      "canonical_panel": 0.46153846153846156,
+      "weak_panel": 0.21663778162911612
+    },
+    {
+      "name": "task_type",
+      "canonical_exact": 0.35193452380952384,
+      "raw_exact": 0.29910714285714285,
+      "mean_tanimoto": 0.5631887863727837,
+      "canonical_panel": 0.46153846153846156,
+      "weak_panel": 0.20623916811091855
+    }
+  ],
+  "notes": [
+    "listwise 单独应用在 1344 combined 低于当前 reward m0，不能直接替换主线。",
+    "listwise 在 region_panel_770 上超过当前 770 主线，值得保留。",
+    "source+difficulty+task_type 分组路由在 1344 上超过之前 local group best，但使用本地标签选择分组，有过拟合风险。",
+    "下一步仍应优先跑 weak_layout_crop_v2 远端候选池扩展，因为 selector 提升空间已经很小。"
+  ]
+}

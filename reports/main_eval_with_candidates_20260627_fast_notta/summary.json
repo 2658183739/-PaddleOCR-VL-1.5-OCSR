@@ -1,0 +1,292 @@
+{
+  "out_root": "/root/autodl-fs/outputs_v2/main_eval_with_candidates_20260627_fast_notta",
+  "policy_json": "/root/autodl-fs/outputs_v2/reward_policy_rerank_20260626_split75/policy_raw.json",
+  "policy_margin": "1.5",
+  "variants": {
+    "canonical_smiles_main_v1": {
+      "selected": {
+        "total": 767,
+        "missing_predictions": 0,
+        "canonical_exact": 0.37027379400260757,
+        "raw_exact": 0.3220338983050847,
+        "valid_smiles_rate": 0.9739243807040417,
+        "mean_tanimoto": 0.6370767022415543,
+        "mean_edit_similarity": 0.7488806013910193,
+        "tanimoto_coverage": 0.9739243807040417,
+        "by_source_exact": {
+          "decimer": 0.02666666666666667,
+          "real_world": 0.2119815668202765,
+          "uob": 0.74,
+          "uspto": 0.43
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.4375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02666666666666667,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.029411764705882353,
+          "molecule_structure_recognition": 0.585,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.6428571428571429,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {}
+      },
+      "chem_light": {
+        "total": 767,
+        "missing_predictions": 0,
+        "canonical_exact": 0.363754889178618,
+        "raw_exact": 0.3194263363754889,
+        "valid_smiles_rate": 0.9752281616688396,
+        "mean_tanimoto": 0.6303061192690459,
+        "mean_edit_similarity": 0.7466427024238405,
+        "tanimoto_coverage": 0.9752281616688396,
+        "by_source_exact": {
+          "decimer": 0.02,
+          "real_world": 0.2073732718894009,
+          "uob": 0.755,
+          "uspto": 0.4
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.058823529411764705,
+          "molecule_structure_recognition": 0.5775,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.5714285714285714,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {}
+      },
+      "reward_policy": {
+        "total": 767,
+        "missing_predictions": 0,
+        "canonical_exact": 0.3754889178617992,
+        "raw_exact": 0.3285528031290743,
+        "valid_smiles_rate": 0.9752281616688396,
+        "mean_tanimoto": 0.6397309233550116,
+        "mean_edit_similarity": 0.7538135776365589,
+        "tanimoto_coverage": 0.9752281616688396,
+        "by_source_exact": {
+          "decimer": 0.02666666666666667,
+          "real_world": 0.2119815668202765,
+          "uob": 0.765,
+          "uspto": 0.425
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02666666666666667,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.058823529411764705,
+          "molecule_structure_recognition": 0.595,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.6428571428571429,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {}
+      }
+    },
+    "weak_domain_v2": {
+      "selected": {
+        "total": 577,
+        "missing_predictions": 0,
+        "canonical_exact": 0.12998266897746968,
+        "raw_exact": 0.10398613518197573,
+        "valid_smiles_rate": 0.9792027729636048,
+        "mean_tanimoto": 0.3938200240548692,
+        "mean_edit_similarity": 0.5900602218737788,
+        "tanimoto_coverage": 0.9792027729636048,
+        "by_source_exact": {
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.10457516339869281,
+          "real_world_photo_scan": 0.18867924528301888,
+          "uob": 0.0,
+          "uspto": 0.25
+        },
+        "by_task_type_exact": {
+          "molecule_structure_recognition": 0.12998266897746968
+        },
+        "by_eval_panel_exact": {}
+      },
+      "chem_light": {
+        "total": 577,
+        "missing_predictions": 0,
+        "canonical_exact": 0.1265164644714038,
+        "raw_exact": 0.10051993067590988,
+        "valid_smiles_rate": 0.9792027729636048,
+        "mean_tanimoto": 0.39146998246512005,
+        "mean_edit_similarity": 0.5887133630442676,
+        "tanimoto_coverage": 0.9792027729636048,
+        "by_source_exact": {
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.10457516339869281,
+          "real_world_photo_scan": 0.18867924528301888,
+          "uob": 0.5,
+          "uspto": 0.2
+        },
+        "by_task_type_exact": {
+          "molecule_structure_recognition": 0.1265164644714038
+        },
+        "by_eval_panel_exact": {}
+      },
+      "reward_policy": {
+        "total": 577,
+        "missing_predictions": 0,
+        "canonical_exact": 0.1265164644714038,
+        "raw_exact": 0.10398613518197573,
+        "valid_smiles_rate": 0.9792027729636048,
+        "mean_tanimoto": 0.3956449864898022,
+        "mean_edit_similarity": 0.5907387356757293,
+        "tanimoto_coverage": 0.9792027729636048,
+        "by_source_exact": {
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.1111111111111111,
+          "real_world_photo_scan": 0.18396226415094338,
+          "uob": 0.0,
+          "uspto": 0.21666666666666667
+        },
+        "by_task_type_exact": {
+          "molecule_structure_recognition": 0.1265164644714038
+        },
+        "by_eval_panel_exact": {}
+      }
+    },
+    "combined": {
+      "selected": {
+        "total": 1344,
+        "missing_predictions": 0,
+        "canonical_exact": 0.26711309523809523,
+        "raw_exact": 0.22842261904761904,
+        "valid_smiles_rate": 0.9761904761904762,
+        "mean_tanimoto": 0.5323205870163426,
+        "mean_edit_similarity": 0.6806965545298233,
+        "tanimoto_coverage": 0.9761904761904762,
+        "by_source_exact": {
+          "decimer": 0.02666666666666667,
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.10457516339869281,
+          "real_world": 0.2119815668202765,
+          "real_world_photo_scan": 0.18867924528301888,
+          "uob": 0.7326732673267327,
+          "uspto": 0.38846153846153847
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.4375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02666666666666667,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.029411764705882353,
+          "molecule_structure_recognition": 0.3162743091095189,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.6428571428571429,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {
+          "canonical_smiles_main_v1": 0.37027379400260757,
+          "weak_domain_v2": 0.12998266897746968
+        }
+      },
+      "chem_light": {
+        "total": 1344,
+        "missing_predictions": 0,
+        "canonical_exact": 0.2619047619047619,
+        "raw_exact": 0.22544642857142858,
+        "valid_smiles_rate": 0.9769345238095238,
+        "mean_tanimoto": 0.5275320009946975,
+        "mean_edit_similarity": 0.678841192883652,
+        "tanimoto_coverage": 0.9769345238095238,
+        "by_source_exact": {
+          "decimer": 0.02,
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.10457516339869281,
+          "real_world": 0.2073732718894009,
+          "real_world_photo_scan": 0.18867924528301888,
+          "uob": 0.7524752475247525,
+          "uspto": 0.35384615384615387
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.058823529411764705,
+          "molecule_structure_recognition": 0.3111566018423746,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.5714285714285714,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {
+          "canonical_smiles_main_v1": 0.363754889178618,
+          "weak_domain_v2": 0.1265164644714038
+        },
+        "delta_vs_selected_exact": -0.005208333333333315,
+        "delta_vs_selected_tanimoto": -0.004788586021645003
+      },
+      "reward_policy": {
+        "total": 1344,
+        "missing_predictions": 0,
+        "canonical_exact": 0.26860119047619047,
+        "raw_exact": 0.23214285714285715,
+        "valid_smiles_rate": 0.9769345238095238,
+        "mean_tanimoto": 0.5346977517412692,
+        "mean_edit_similarity": 0.6838030242054589,
+        "tanimoto_coverage": 0.9769345238095238,
+        "by_source_exact": {
+          "decimer": 0.02666666666666667,
+          "decimer_handdrawn": 0.02666666666666667,
+          "edu_exam": 0.1111111111111111,
+          "real_world": 0.2119815668202765,
+          "real_world_photo_scan": 0.18396226415094338,
+          "uob": 0.7574257425742574,
+          "uspto": 0.3769230769230769
+        },
+        "by_task_type_exact": {
+          "chinese_exam": 0.1935483870967742,
+          "degraded_scan": 0.375,
+          "document_embed": 0.0,
+          "hand_drawn_molecule_structure_recognition": 0.02666666666666667,
+          "handwritten": 0.625,
+          "journal_fig": 0.0,
+          "long_molecule": 0.058823529411764705,
+          "molecule_structure_recognition": 0.31832139201637666,
+          "multi_grid": 0.0,
+          "page_level": 0.47619047619047616,
+          "photo": 0.5,
+          "scan": 0.6428571428571429,
+          "stereo_focused": 0.03333333333333333
+        },
+        "by_eval_panel_exact": {
+          "canonical_smiles_main_v1": 0.3754889178617992,
+          "weak_domain_v2": 0.1265164644714038
+        },
+        "delta_vs_selected_exact": 0.0014880952380952328,
+        "delta_vs_selected_tanimoto": 0.0023771647249266614,
+        "delta_vs_chem_light_exact": 0.006696428571428548,
+        "delta_vs_chem_light_tanimoto": 0.007165750746571664
+      }
+    }
+  }
+}
