@@ -34,6 +34,8 @@ V2-1/reports/three_eval_progress_20260627/README.md
 
 这里的三部分评测是 `canonical_smiles_main_v1`、`weak_domain_v2` 和 `region_panel_770`。`1344 combined` 是前两套 SMILES 主评测的合并视角，不是第四个独立数据集。
 
+先把口径说清楚：下表里的 `baseline` 不是 PaddleOCR-VL-1.5 原始模型。它指的是最早跑通的 V2-1 微调基线，也就是已经经过 OCSR LoRA SFT 后、还没有上 candidate-choice reward head 和分组路由的 selected 结果。PaddleOCR-VL-1.5 原始模型没有做 OCSR 任务适配，在 canonical SMILES exact 指标上基本是 0，单独放在第 5 节对比。
+
 | 面板 | N | baseline | stable | best | oracle |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | 1344 combined | 1344 | 0.267113 | 0.350446 | 0.354167 | 0.387649 |
@@ -41,13 +43,13 @@ V2-1/reports/three_eval_progress_20260627/README.md
 | weak_domain_v2 | 577 | 0.129983 | 0.206239 | 0.211438 | 0.246101 |
 | region_panel_770 | 770 | 0.384416 | 0.437662 | 0.440260 | 0.527273 |
 
-结论很直接：三套评测都比 baseline 好，但还没到“强一倍”。现在的瓶颈主要是候选池召回和弱域样本覆盖，不是把 PaddleOCR-VL-1.5 主模型再大改一遍。
+结论很直接：三套评测都比第一版 V2-1 baseline 好，但还没到“强一倍”。如果和 PaddleOCR-VL-1.5 原始模型比，提升会更明显，因为原始模型 exact 基本为 0。现在的瓶颈主要是候选池召回和弱域样本覆盖，不是把 PaddleOCR-VL-1.5 主模型再大改一遍。
 
 ### 1.1 几个列名是什么意思
 
 | 列名 | 含义 | 怎么得到 |
 | --- | --- | --- |
-| `baseline` | V2-1 当前导出模型的原始 selected 结果。不加 candidate-choice reward head，不做分组路由，也不使用本地 margin 搜索。 | 用 `V2-1/outputs/export/` 跑候选推理，取模型原本选中的候选作为输出。 |
+| `baseline` | 第一版 V2-1 微调基线的 selected 结果。它已经是 PaddleOCR-VL-1.5 经过 OCSR LoRA SFT 后的结果，不是原始 PaddleOCR-VL-1.5。这里不加 candidate-choice reward head，不做分组路由，也不使用本地 margin 搜索。 | 用 `V2-1/outputs/export/` 跑候选推理，取模型原本选中的候选作为输出。 |
 | `stable` | 当前稳健值。它是目前建议保留的主结果。 | 在同一个候选池上训练轻量 candidate-choice reward head，采用 margin=0 的保守选择策略，直接选 reward 分最高的候选。 |
 | `best` | 本地最优。分数略高，但比 `stable` 更依赖本地验证集上的分组选择。 | 在 reward head 输出上做 group margin 或局部分组路由，例如按 `source`、`difficulty`、`task_type` 这类字段选择局部最优策略。 |
 | `oracle` | 现有候选池上限。它不是模型分数，也不是训练结果。 | 对每张图检查所有候选，只要有任一候选命中标签就算命中，用来判断候选池本身还有多少空间。 |
@@ -58,7 +60,7 @@ V2-1/reports/three_eval_progress_20260627/README.md
 
 ### 1.2 这些结果做了什么
 
-主模型本身来自 Single-stage Real-Weighted LoRA SFT。训练时只让模型输出 canonical SMILES，不混入 chemfig、`ssml_normed`、反应式或教育题解析格式。导出模型保存在 `V2-1/outputs/export/`。
+主模型本身来自 Single-stage Real-Weighted LoRA SFT。训练时只让模型输出 canonical SMILES，不混入 chemfig、`ssml_normed`、反应式或教育题解析格式。导出模型保存在 `V2-1/outputs/export/`。也就是说，`baseline` 之前还有一个更低的参照：PaddleOCR-VL-1.5 原始模型。原始模型几乎不能稳定输出可评分的 canonical SMILES，exact 基本为 0；V2-1 baseline 是第一次把模型拉到 OCSR SMILES 任务上的结果。
 
 后面的优化没有直接重训整个 VLM，而是先利用推理时保存下来的多候选：
 
@@ -144,7 +146,7 @@ V2-1/data/sft_materialized/train_singleline_rw_v2_messages.jsonl
 | `molgrapher_synthetic` | repeat 2 | 用来补复杂结构和视觉扰动，但不让它压过真实样本。 |
 | `uspto30k_clean` / `uspto30k_abbreviated` / `uspto30k_large` | 每类 cap 1500 | 这些数据干净、规整，量太大会把模型拉回干净 printed 风格，所以只做补充分布。 |
 
-这个分布的基础不是总量，而是三件事：当前 baseline 的错误分布、目标部署场景里的真实样本分布、标签可信度和来源稳定性。
+这个分布的基础不是总量，而是三件事：第一版 V2-1 baseline 的错误分布、目标部署场景里的真实样本分布、标签可信度和来源稳定性。
 
 后面如果重新配比，不建议简单平均。更合理的做法是按“错误率 + 候选 oracle gap + 来源可信度”动态调权。某类样本错误率高、候选池又有潜力，就值得加权；样本很干净但对最终任务帮助有限，就不该无限放大。
 
@@ -267,6 +269,12 @@ V2-1/data/eval/weak_domain_v2/
 ## 5. 基线模型与微调模型结果
 
 这里放两套早期核心结果：PaddleOCR-VL-1.5 原版直接测试，以及当前 single-stage real-weighted LoRA SFT 后的 merged export 模型。指标统一用 `canonical exact acc`、`token micro F1`、`valid SMILES` 和 `mean Tanimoto`。
+
+注意这里的“原版模型”和第 1 节表里的 `baseline` 不是同一个东西：
+
+- PaddleOCR-VL-1.5 原版：没有针对 OCSR canonical SMILES 做微调，exact 基本为 0。
+- V2-1 baseline：第一版 OCSR LoRA SFT 模型的 selected 基线，已经是可用基线。
+- `stable` / `best`：在 V2-1 baseline 之后继续做候选选择和分组路由得到的结果。
 
 ### 5.1 `ocsr_realworld_mixed_eval_v1p1`
 

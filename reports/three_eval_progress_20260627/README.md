@@ -4,7 +4,7 @@
 
 ## 结论
 
-现在确实比 V2-1 原始结果好了一些。提升主要来自候选选择、路由、轻量重排和局部裁剪，不是直接大改主 VLM。
+现在确实比第一版 V2-1 baseline 好了一些。这里说的 baseline 不是 PaddleOCR-VL-1.5 原始模型，而是已经做过 OCSR LoRA SFT 的 selected 基线。PaddleOCR-VL-1.5 原始模型在 canonical SMILES exact 上基本为 0。当前提升主要来自候选选择、路由、轻量重排和局部裁剪，不是直接大改主 VLM。
 
 当前瓶颈也很明确：selector 已经有收益，但候选池 oracle 还没高到可以“强一倍”。所以后面更该补候选，而不是继续盲堆后处理。
 
@@ -12,7 +12,7 @@
 
 ## 三个评测集
 
-下面是当前三套评测的总览。`baseline` 是原始基线，`stable` 是当前稳健值，`best` 是本地最优，`oracle` 是现有候选池上限。
+下面是当前三套评测的总览。这里的 `baseline` 是第一版 V2-1 微调基线，不是 PaddleOCR-VL-1.5 原始模型。原始模型没有做 OCSR canonical SMILES 适配，在 exact 指标上基本为 0；V2-1 baseline 已经是 LoRA SFT 后的 selected 结果。`stable` 是当前稳健值，`best` 是本地最优，`oracle` 是现有候选池上限。
 
 | 面板 | N | baseline | stable | best | oracle | 说明 |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
@@ -23,7 +23,7 @@
 
 结论很简单：
 
-- 三套都比 baseline 好了。
+- 三套都比 V2-1 baseline 好了。和 PaddleOCR-VL-1.5 原始模型相比，差距更大，因为原始模型 exact 基本为 0。
 - 主集提升最稳，弱域提升幅度最大，但 oracle 仍偏低。
 - region panel 的上限最高，说明候选池还有空间，但不是 selector 单独能吃完的。
 
@@ -57,7 +57,7 @@
 
 ## 现在该保留什么
 
-- 保留当前稳健 reward 路线，不回退到原始 baseline。
+- 保留当前稳健 reward 路线，不回退到第一版 V2-1 baseline。
 - 保留候选保存，别只看单输出。
 - 保留区域裁剪和候选扩展，但只在弱布局类样本上重点用。
 - 不要继续盲目扩大弱布局 crop 变体，先把候选源补齐。
@@ -91,7 +91,7 @@
 
 这个分布的基础，不是总量，而是三件事：
 
-1. 当前 baseline 的错误分布。
+1. 第一版 V2-1 baseline 的错误分布。
 2. 目标部署场景里的真实样本分布。
 3. 标签可信度和来源稳定性。
 
