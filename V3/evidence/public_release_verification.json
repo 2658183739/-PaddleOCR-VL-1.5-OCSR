@@ -1,0 +1,28 @@
+{
+  "schema": "paddleocr-vl-ocsr/public-release-verification/v1",
+  "verified_at": "2026-07-19T12:04:00+08:00",
+  "github": {
+    "repository": "https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR",
+    "branch": "main",
+    "commit": "a68b434f2a905562929c545470192b4b11f1c66c",
+    "parent_v2_1_commit": "82ff29429475636780e76d5a6740803e0582e06f",
+    "page_verified": true
+  },
+  "huggingface": {
+    "repository": "https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR",
+    "branch": "main",
+    "revision": "e496110ec222c1a70ebca287990c07dae47a2daa",
+    "license_metadata": "apache-2.0",
+    "weight_sha256": "2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13",
+    "page_verified": true
+  },
+  "presentation": {
+    "html_sha256": "bbc537f96ed8f3bf4bcf1687c2fe60175b6f627b6661aed11d1dd5060741e7d2",
+    "pptx_sha256": "9818447023d41d2eeda81725259f7e2abf43637bb693730d603e21d5de9df795",
+    "montage_sha256": "df88a9cae7aa87ec6216ae8237eaba980c22a2831fc83ff49345560cba9b5d37",
+    "slides": 18,
+    "powerpoint_out_of_bounds_shapes": 0
+  },
+  "independent_clean_download_gpu_smoke": false,
+  "demo_recording_in_scope": false
+}

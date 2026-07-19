@@ -42,7 +42,7 @@
 - 项目所有者已确认 legacy/wild/symbolic 离线人工审核完成；公开证据为 owner attestation 与 frozen labels SHA256，不提供或虚构逐样本双盲记录。
 - private photo 自采评测为 0；算法退化不能算真实采集。
 - 训练样本级 license/source URL/structure ID 不完整。
-- 项目 LICENSE 尚未由所有者确定。
-- 公共 GitHub/Hugging Face 的最终上传与远端复验、第二台机器从零复现尚未完成；Demo 录屏按本轮范围取消。
+- 项目代码与派生权重采用 Apache-2.0；第三方数据按 `NOTICE` 与许可矩阵分别归属，训练原图/JSONL 不重新分发。
+- 公共 GitHub/Hugging Face 的最终上传与页面级远端复验已完成；第二台机器从零复现、clean-download/GPU smoke 尚未完成，Demo 录屏按本轮范围取消。
 
 这些缺口不影响本次 H800 机器实验已完成的事实，但会影响比赛的数据质量、开源和真实性评分。

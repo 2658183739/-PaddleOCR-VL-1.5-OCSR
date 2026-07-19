@@ -2,7 +2,7 @@
 
 ## 摘要
 
-本报告记录 V3 如何把分子结构图转换为单分子 canonical SMILES，以及训练数据、评测划分、LoRA 微调、消融实验和后训练的可复现实验口径。报告只把已经写入清单、日志、评测报告或项目所有者审核声明的内容称为结果；真实自采和公共发布等尚未完成的事项单独列为限制，不用计划替代证据。
+本报告记录 V3 如何把分子结构图转换为单分子 canonical SMILES，以及训练数据、评测划分、LoRA 微调、消融实验和后训练的可复现实验口径。报告只把已经写入清单、日志、评测报告、项目所有者审核声明或远端 revision 的内容称为结果；真实自采、独立机器复现等尚未完成的事项单独列为限制，不用计划替代证据。
 
 任务定义是：输入一张分子结构图和固定 prompt，输出一行可以由 RDKit 解析的单分子 canonical SMILES。主指标是 RDKit canonical exact，valid SMILES、token F1、Tanimoto 和 scaffold-novel exact 用来解释错误类型，不能互相替代。
 
@@ -142,8 +142,8 @@ screen -dmS v3pipeline bash -lc 'set -o pipefail; cd /root/autodl-tmp; bash V3/r
 
 流程顺序固定为 `2×2×2 probe -> final checkpoint 选择 -> hard replay gate -> greedy/beam 对照 -> locked test -> artifact package`。中断后依靠阶段完成标记恢复，不删除已有输出。H800 训练日志、checkpoint hash、环境快照和最终包路径必须一起保留。
 
-## 6. 限制与发布前工作
+## 6. 限制与发布状态
 
-当前仍缺：private photo、Docker 或独立环境复现、公共 GitHub/Hugging Face final model 和至少四 seed 的 confirmatory 复验。项目已选择 Apache-2.0，并用许可矩阵隔离不适合再分发的训练原图；人工审核已由项目所有者声明完成。Demo 录屏不再作为本轮交付项。官方要求的最终训练数据构建报告、模型卡和答辩 PPT 以本报告为事实底稿，公共发布完成后再回填精确 URL/revision。
+公共发布已完成：GitHub 源码提交为 `a68b434f2a905562929c545470192b4b11f1c66c`，Hugging Face 模型 revision 为 `e496110ec222c1a70ebca287990c07dae47a2daa`，远端 Xet 权重 SHA256 为 `2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13`。当前仍缺 private photo、Docker/第二台机器独立复现、clean-download 后的 GPU smoke 和至少四 seed 的 confirmatory 复验。项目采用 Apache-2.0，并用许可矩阵隔离不适合再分发的训练原图；人工审核由项目所有者声明完成。Demo 录屏不再作为本轮交付项。完整远端验收边界见 `evidence/PUBLIC_RELEASE_VERIFICATION_zh.md`。
 
 不得把 UOB 小子集的 70%-80% 目标当作全量保证。当前证据显示干净 printed 子域可以明显高于真实页面、手绘和教育图；V3 的工程目标是先保证口径清楚、可复现和不夸大，再用候选召回、crop 和 hard replay 在固定回归闸门内争取增益。

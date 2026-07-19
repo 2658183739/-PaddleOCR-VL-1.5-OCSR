@@ -138,7 +138,7 @@ legacy core/region 已被 V2-1 多次使用，只适合作为 development 和历
 
 ### 16. 社区与开源材料缺失
 
-当前 model card、dataset card、复现指南、`CONTRIBUTING.md`、Apache-2.0、NOTICE、许可矩阵和复现 issue 模板已建立。逐样本训练数据许可清单仍不完整，因此训练原图/JSONL 不进入公共 release；模型下载地址在 GitHub/HF 发布完成后回填 revision。
+当前 model card、dataset card、复现指南、`CONTRIBUTING.md`、Apache-2.0、NOTICE、许可矩阵和复现 issue 模板已公开。GitHub 提交为 `a68b434f2a905562929c545470192b4b11f1c66c`，HF revision 为 `e496110ec222c1a70ebca287990c07dae47a2daa`。逐样本训练数据许可清单仍不完整，因此训练原图/JSONL 不进入公共 release；第二台机器 clean-download/GPU smoke 仍待完成。
 
 ### 17. PaddleOCR-VL-1.6 仍未核验
 

@@ -12,7 +12,7 @@ V3 是一个面向两天冲刺、同时强调数据质量与实验可解释性�
 - `RELEASE_UPLOAD_GUIDE_zh.md`：比赛包、GitHub 与 Hugging Face 的发布边界和验收步骤。
 - `DATA_LICENSES_AND_ATTRIBUTION_zh.md`：逐来源许可证据、归属和“不重新分发训练原图”的边界。
 
-公开地址为 [GitHub](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR) 与 [Hugging Face](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)。GitHub 的历史提交保留 V2-1 参考，当前 `V3/` 与 HF 主分支发布冻结的 V3 final；不同面板和版本不能纵向混算提升率。
+公开地址为 [GitHub](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR) 与 [Hugging Face](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)。V3 公开源码提交为 [`a68b434f2a905562929c545470192b4b11f1c66c`](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR/commit/a68b434f2a905562929c545470192b4b11f1c66c)，模型 revision 为 [`e496110ec222c1a70ebca287990c07dae47a2daa`](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR/commit/e496110ec222c1a70ebca287990c07dae47a2daa)。GitHub 历史保留 V2-1 参考，当前 `V3/` 与 HF 主分支发布冻结的 V3 final；不同面板和版本不能纵向混算提升率。
 
 ## 1. 结论先读
 
@@ -61,7 +61,7 @@ V3 是一个面向两天冲刺、同时强调数据质量与实验可解释性�
 | 任务复杂度 15 | 覆盖论文裁图、拍照、手绘、长分子、立体化学等视觉难点 | 主任务仍是单图到 SMILES，结构理解/语义推理项存在天然上限 |
 | 训练数据科学性 20 | 来源统计、严格过滤、`2x2` 配比、自动验证、许可矩阵和人工完成声明 | 历史训练清单缺样本级 license/source URL/structure ID；因此公共仓不重新分发训练原图/JSONL |
 | 微调策略与创新 10 | LoRA continuation、warm-start、两 seed 因子消融、1400-step final、hard replay、beam 与固定候选重排均已完成 | 两 seed 不足以支持显著性声明；reward head/targeted crop 仍需同候选池完整复评 |
-| 文档与开源 20 | 主 README、runbook、训练/评测脚本、本地 Demo、Apache-2.0、NOTICE、GitHub/HF 发布候选、18 页 HTML/PPT | 第二台机器从零复现与容器 digest 仍缺；Demo 录屏按本轮范围取消 |
+| 文档与开源 20 | 主 README、runbook、训练/评测脚本、本地 Demo、Apache-2.0、NOTICE、已发布 GitHub/HF revision、18 页 HTML/PPT | 第二台机器从零复现与容器 digest 仍缺；Demo 录屏按本轮范围取消 |
 
 逐项评分证据与解决动作见 `evidence/SCORE_RUBRIC_ACTIONS_zh.md`。官方特别规定评估集合成占比过高可被一票否决，因此 V3 将算法退化只作为训练增强，不把它冒充真实评测数据。
 
@@ -504,7 +504,7 @@ locked test 结果不能再用于返回训练或搜索超参；如果继续改�
 仍未完成：
 
 - 自采实拍 train/test；
-- 公共 GitHub/Hugging Face 发布后的 clean-clone / clean-download 复验；
+- 第二台机器上的 clean-clone / clean-download 与 GPU smoke；当前只完成远端页面、文件、许可、revision 和权重 SHA256 验收；
 - 容器级复现验证；
 - reward head 与 targeted crop 的同候选池完整复评；
 - private photo locked test 与第二台机器从零复现；

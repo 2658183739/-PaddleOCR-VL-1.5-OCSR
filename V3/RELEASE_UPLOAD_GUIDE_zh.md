@@ -42,7 +42,7 @@
 4. 写明最终 canonical 推理使用 beam4/return4，H800 80GB 使用单 worker；
 5. 附模型权重 SHA256：`2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13`。
 
-本轮发布到已登录的 [Hugging Face 模型仓](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)，用 V3 final 更新主分支；V2-1 仍可由仓库历史追溯。上传后从另一目录重新下载或使用远端文件元数据核对权重 SHA256，再把 revision 写回发布记录。
+本轮已发布到 [Hugging Face 模型仓](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)，V3 final revision 为 `e496110ec222c1a70ebca287990c07dae47a2daa`；V2-1 仍可由仓库历史追溯。远端 Xet 元数据已核对权重 SHA256；从第二台 GPU 机器 clean-download 后的加载与 20 条 beam smoke 仍需单独执行。
 
 ## 4. 比赛材料的一致性
 
@@ -57,6 +57,8 @@
 PPT、README、模型卡和训练报告已经按 `FINAL_RESULTS.json` 回填。若人工双审剔除错误标签，只能对已经冻结的预测重新统计，不能返回修改模型、prompt 或生成策略。
 
 ## 5. 发布后验收
+
+GitHub 源码提交：`a68b434f2a905562929c545470192b4b11f1c66c`。Hugging Face 模型 revision：`e496110ec222c1a70ebca287990c07dae47a2daa`。页面级文件、许可证、模型卡和权重 SHA256 验收已完成，详见 `evidence/PUBLIC_RELEASE_VERIFICATION_zh.md`。
 
 1. 在新目录下载 GitHub 代码和 HF 模型。
 2. 按 `REPRODUCTION_GUIDE_zh.md` 安装环境。

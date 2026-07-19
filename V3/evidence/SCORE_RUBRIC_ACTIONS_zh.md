@@ -58,6 +58,6 @@
 | 6.1 文档质量 | 主 README、48h 计划、消融/评测/自采协议、缺失项清单 | 最终结果和限制未回填 | 所有表格只写真实完成结果，提供从安装到复现的完整命令 |
 | 6.2 代码可复现 | builder、verifier、11 个测试模块/29 项测试、训练/推理/评测脚本、artifact hash | CUDA/Paddle 环境锁和公共版本号缺失 | `environment.yml`/`requirements-lock.txt`、nvidia-smi、Paddle commit、公共 Git commit 齐全，第二台 A100 通过 smoke |
 | 6.3 Demo 完整性 | 本地 Gradio 代码存在，H800 已保存 final model 单样本与 sharding 推理 smoke | 未提供交互式 Demo 截图/录屏 | 本轮明确取消录屏，不把该项写成已完成；后续可在同一 final hash 上补正常图、坏图与超大图演示 |
-| 6.4 社区价值 | 方法、数据构建流程、Apache-2.0/NOTICE、CONTRIBUTING、模型/数据卡、许可矩阵和复现 issue 模板齐全 | 公共 GitHub/HF 仍需完成远端上传和 clean-download 验收 | 发布 commit/revision/hash；训练原图和 JSONL 因样本级许可不足而隔离 |
+| 6.4 社区价值 | 方法、数据构建流程、Apache-2.0/NOTICE、CONTRIBUTING、模型/数据卡、许可矩阵、复现 issue 模板、GitHub `a68b434` 与 HF `e496110` 已公开 | 第二台机器 clean-download/GPU smoke 仍缺 | 已验证远端 commit/revision/权重 SHA256；训练原图和 JSONL 因样本级许可不足而隔离 |
 
-最重要的边界：V3 已完成 H800 实验、owner-attested 现有面板人工审核与项目许可；自采实拍、第二机复现和公共发布后的远端验收仍必须按真实证据计分，不能由计划或占位文本替代。
+最重要的边界：V3 已完成 H800 实验、owner-attested 现有面板人工审核、项目许可和公共页面级发布验收；自采实拍、第二机复现与 clean-download 后 GPU smoke 仍必须按真实证据计分，不能由计划或占位文本替代。

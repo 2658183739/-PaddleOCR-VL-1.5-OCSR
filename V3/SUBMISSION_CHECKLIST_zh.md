@@ -28,9 +28,9 @@
 
 ## D. 代码、模型与复现发布
 
-- [ ] GitHub 包含 README、训练/评测脚本、tests、runbooks、Demo、LICENSE、CONTRIBUTING 和 issue 模板。
-- [ ] Hugging Face 包含 final merged model、model card、限制、结果、文件 hash 和最小推理示例。
-- [ ] 大文件使用 LFS、release asset 或对象存储，不直接塞入普通 Git history。
+- [x] GitHub `a68b434f2a905562929c545470192b4b11f1c66c` 包含 README、训练/评测脚本、tests、runbooks、Demo、LICENSE、CONTRIBUTING、issue 模板和 18 页 HTML/PPT。
+- [x] Hugging Face `e496110ec222c1a70ebca287990c07dae47a2daa` 包含 final merged model、model card、限制、结果、文件 hash 和最小推理示例。
+- [x] 权重由 Hugging Face Xet 对象存储；远端 SHA256 为 `2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13`，未进入 GitHub 普通 Git history。
 - [ ] 在第二台 A100/H800 上从零完成环境安装、20-step smoke 和固定小样本复评。
 - [ ] 保存 Dockerfile/镜像 digest，或明确记录基础镜像名称与 tag。
 

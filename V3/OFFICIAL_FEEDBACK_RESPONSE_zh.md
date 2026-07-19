@@ -7,7 +7,7 @@
 | 补充非公开手绘/真实拍照的标注工具、人员、QC | `scripts/qc_review_app.py` 提供逐图工具；项目所有者确认 legacy/wild/symbolic 离线人工审核完成，并用 attestation 绑定 frozen labels SHA256；private photo 仍为 0 | 已完成现有面板审核；自采待补 | 公开 owner attestation 与 QC 流程，不虚构审核人身份或逐样本记录；未来自采另行记录设备/角度/光照/授权并重新双审 |
 | 解释公开 benchmark 抽样比例 | core 753、region 754 的目标配额、严格通过数和理由已写入 README/数据卡；UOB/USPTO 约 200 条是比较锚点，DECIMER/EDU 约 150 条覆盖困难类型，real-world 保留全部通过样本 | 已完成（方法） | 提交时附 `labels.jsonl`、`v2_1_eval_qc_summary.json` 和筛选前后统计；不能把目标配额写成最终通过数 |
 | 增加训练数据说明和模型微调 | `TRAINING_DATA_AND_FINETUNING_REPORT_zh.md`、数据卡、模型卡；final control 22,762 条七部分配比、LoRA continuation、2×2×2 probe 和 hard replay gate | 已完成（文档/实验） | 把报告随最终开源包提交；补样本级许可字段后再公开训练清单 |
-| 加强社区/技术影响力 | 方法、脚本、Demo、18 页 HTML/PPT、GitHub/HF 发布候选和历史 4090 参考已整理 | 发布中 | 更新现有 GitHub/HF 主分支，保留 V2-1 历史；用公开 commit/revision 和 clean-download 验收，不把 Demo 录屏作为本轮已完成证据 |
+| 加强社区/技术影响力 | 方法、脚本、Demo、18 页 HTML/PPT、GitHub `a68b434`、HF `e496110` 和历史 4090 参考已公开 | 已完成（发布） | 已验证公开页面、Apache-2.0、文件清单、revision 与权重 SHA256；第二台机器 clean-download/GPU smoke 保持为限制，不把 Demo 录屏作为本轮已完成证据 |
 | README 补充训练数据来源和构成 | README 新增七部分精确数量/比例、source counts 和许可缺口 | 已完成（文档） | 公开前逐样本补 `license/source_url_or_doc/structure_id`，未知来源隔离 |
 | 增加 PaddleOCR-VL-1.5 直接 baseline | 4090 历史 770 条面板：原始权重 exact 0.00%、valid 30.78%、token F1 6.59%、Tanimoto 0.0027；V2-1 export exact 33.77% | 已完成（历史统一面板） | V3 final 结果只使用 `FINAL_RESULTS.json`，不要把 V2-1 stable/best/oracle 当 V3 baseline |
 | 解释评测集修改方向 | 按论文分组、canonical 唯一性、公开锚点/弱域诊断、symbolic 独立 track、自动 QC 和 owner-attested 人工审核均已记录 | 已完成（规则与报告） | 若未来清单变化，attestation 自动失效并重新审核；当前不补造不存在的一致率或分歧统计 |
@@ -19,7 +19,7 @@
 | 补真实手绘、拍照不同退化 | 当前 private photo=0；算法增强 927/1854 只属于训练 augmentation | 待采集 | 至少两台设备、正面/斜拍/低光/反光阴影四条件；eval-only 结构与 train 结构完全隔离；官方 `>=1000` 规模还差约 699 张真实图 |
 | 证明训练配比不是主观意见 | `2×2×2` 两 seed、主效应、交互、dose-2、paired bootstrap 和失败条件均有证据 | 已完成（探索性） | 提交时明确只有两个 seed，不能写显著最优；后续确认实验至少 4 seed、分块随机顺序 |
 | 继续探索后训练 | final checkpoint、300-step hard replay、greedy/beam4/return4 和 chem-light 固定候选重排均已完成；最终采用 `checkpoint-1400 + beam4/return4` | 已完成本轮 | hard replay 与 chem-light 均因回退被拒绝；locked test 冻结后未回调调参 |
-| 提交训练数据构建报告、GitHub、Hugging Face、答辩 PPT | 训练报告、模型卡、数据卡、Apache-2.0/NOTICE、最终模型包和 18 页 HTML/PPT 已准备 | 发布中 | 更新公共 GitHub/HF，并用 commit/revision/hash 回填；Demo 录屏按本轮范围取消 |
+| 提交训练数据构建报告、GitHub、Hugging Face、答辩 PPT | 训练报告、模型卡、数据卡、Apache-2.0/NOTICE、最终模型和 18 页 HTML/PPT 已发布 | 已完成（发布） | GitHub `a68b434`、HF `e496110`、权重 SHA256 与材料 hash 已回填；Demo 录屏按本轮范围取消 |
 
 ## 不应写入提交材料的结论
 
