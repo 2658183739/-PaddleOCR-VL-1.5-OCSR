@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "owner_attested_complete",
+  "attested_date": "2026-07-19",
+  "attestor_role": "project_owner",
+  "review_mode": "offline_human_review_confirmed_by_project_owner",
+  "scope": {
+    "legacy_core_development": 753,
+    "legacy_region_development": 754,
+    "wild_strict_locked": 301,
+    "wild_scaffold_novel_subset": 134,
+    "wild_symbolic_locked": 460
+  },
+  "frozen_manifest_sha256": {
+    "dev_legacy_core_strict": "ecc1c2d1c022740b51183c420eede5701fd4c92ae482ff9f8965e0afe040f923",
+    "dev_legacy_region_strict": "d400a217500b7bf3112ab25975d1fadc167f078a4a598b91c8d9d66c21dc0156",
+    "wild_strict_v3": "313c70710a168872dfad6e5e1423bcf7ca80bd73b6c675bb86c95da76b579120",
+    "wild_symbolic_v3": "743798d9dabb0b39e824a59e7407e1018835cc75aab6356379c46ed1d04766fd"
+  },
+  "outcome": {
+    "labels_confirmed_for_frozen_evaluation": true,
+    "reported_exclusions_after_review": 0,
+    "reported_label_corrections_after_review": 0,
+    "metrics_require_recomputation": false
+  },
+  "public_evidence_boundary": "Owner attestation is public; reviewer identities, signatures, and row-level private records are not published.",
+  "notes": "The legacy eval_manual_review.csv is retained as a tooling template and is not the authoritative completion record for this externally completed review."
+}

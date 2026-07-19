@@ -1,0 +1,427 @@
+{
+  "seed": 20260717,
+  "rdkit_version": "2025.09.6",
+  "inputs": {
+    "base_rows": 23047,
+    "wild_all_rows": 5008
+  },
+  "base_train_filter": {
+    "multifragment_or_invalid_label": 273,
+    "new_eval_molecule_overlap": 12,
+    "accepted": 22762
+  },
+  "legacy_dev_parse_stats": {
+    "canonical": 1507,
+    "noncanonical_or_symbolic": 30
+  },
+  "legacy_dev_unique_canonical_smiles": 894,
+  "locked_eval_unique_canonical_smiles": 301,
+  "wild_paper_group_split": {
+    "symbolic_or_invalid": 3508,
+    "legacy_dev_molecule_overlap": 72,
+    "train_rows_removed_for_locked_molecule_overlap": 19,
+    "strict_pool": 1428,
+    "paper_groups_total": 519,
+    "paper_groups_eval": 62,
+    "strict_eval": 301,
+    "strict_eval_excess_held_out": 308,
+    "eval_max_per_paper": 5,
+    "strict_train": 800,
+    "symbolic_eval_same_papers": 460
+  },
+  "dev_manifests": {
+    "core": {
+      "noncanonical_or_multifragment": 14,
+      "accepted": 753
+    },
+    "region": {
+      "noncanonical_or_multifragment": 16,
+      "accepted": 754
+    }
+  },
+  "augmentation": {
+    "variant_1": 927,
+    "variant_2": 927,
+    "unique_source_images": 927
+  },
+  "mixtures": {
+    "A_control": {
+      "rows": 22762,
+      "unique_image_refs": 17344,
+      "unique_canonical_smiles": 15365,
+      "source_counts": {
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 14,
+        "molgrapher_synthetic": 4000,
+        "real_world": 4125,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_abbreviated": 1499,
+        "uspto30k_clean": 1499,
+        "uspto30k_large": 1499
+      },
+      "source_percent": {
+        "auto_weak_real_world": 0.8962,
+        "auto_weak_uspto": 0.0351,
+        "auto_weak_uspto30k_abbreviated": 0.0351,
+        "auto_weak_uspto30k_clean": 0.0088,
+        "auto_weak_uspto30k_large": 0.0615,
+        "molgrapher_synthetic": 17.5731,
+        "real_world": 18.1223,
+        "uob": 21.3909,
+        "uspto": 22.1202,
+        "uspto30k_abbreviated": 6.5855,
+        "uspto30k_clean": 6.5855,
+        "uspto30k_large": 6.5855
+      },
+      "difficulty_counts": {
+        "abbreviated": 1507,
+        "chinese_exam": 718,
+        "clean": 1501,
+        "degraded_scan": 391,
+        "document_embed": 348,
+        "easy": 774,
+        "handwritten": 248,
+        "hard": 2006,
+        "journal_fig": 340,
+        "large": 1513,
+        "medium": 6089,
+        "medium_hard": 5043,
+        "multi_grid": 243,
+        "page_level": 402,
+        "photo": 812,
+        "scan": 827
+      },
+      "policy_counts": {
+        "cap_1500": 4521,
+        "repeat_1": 9912,
+        "repeat_2": 4000,
+        "repeat_5": 4329
+      }
+    },
+    "D_wild_only": {
+      "rows": 23562,
+      "unique_image_refs": 18144,
+      "unique_canonical_smiles": 16089,
+      "source_counts": {
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 14,
+        "molgrapher_synthetic": 4000,
+        "molrecbench_wild": 800,
+        "real_world": 4125,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_abbreviated": 1499,
+        "uspto30k_clean": 1499,
+        "uspto30k_large": 1499
+      },
+      "source_percent": {
+        "auto_weak_real_world": 0.8658,
+        "auto_weak_uspto": 0.034,
+        "auto_weak_uspto30k_abbreviated": 0.034,
+        "auto_weak_uspto30k_clean": 0.0085,
+        "auto_weak_uspto30k_large": 0.0594,
+        "molgrapher_synthetic": 16.9765,
+        "molrecbench_wild": 3.3953,
+        "real_world": 17.507,
+        "uob": 20.6646,
+        "uspto": 21.3692,
+        "uspto30k_abbreviated": 6.3619,
+        "uspto30k_clean": 6.3619,
+        "uspto30k_large": 6.3619
+      },
+      "difficulty_counts": {
+        "abbreviated": 1507,
+        "chinese_exam": 718,
+        "clean": 1501,
+        "degraded_scan": 391,
+        "document_embed": 348,
+        "easy": 890,
+        "handwritten": 248,
+        "hard": 2317,
+        "journal_fig": 340,
+        "large": 1513,
+        "medium": 6182,
+        "medium_hard": 5323,
+        "multi_grid": 243,
+        "page_level": 402,
+        "photo": 812,
+        "scan": 827
+      },
+      "policy_counts": {
+        "cap_1500": 4521,
+        "repeat_1": 9912,
+        "repeat_2": 4000,
+        "repeat_5": 4329,
+        "unweighted": 800
+      }
+    },
+    "E_aug_only": {
+      "rows": 23689,
+      "unique_image_refs": 18169,
+      "unique_canonical_smiles": 15365,
+      "source_counts": {
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 14,
+        "molgrapher_synthetic": 4000,
+        "real_world": 4125,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_abbreviated": 1499,
+        "uspto30k_clean": 1499,
+        "uspto30k_large": 1499,
+        "v3_aug_real_world": 927
+      },
+      "source_percent": {
+        "auto_weak_real_world": 0.8612,
+        "auto_weak_uspto": 0.0338,
+        "auto_weak_uspto30k_abbreviated": 0.0338,
+        "auto_weak_uspto30k_clean": 0.0084,
+        "auto_weak_uspto30k_large": 0.0591,
+        "molgrapher_synthetic": 16.8855,
+        "real_world": 17.4131,
+        "uob": 20.5538,
+        "uspto": 21.2546,
+        "uspto30k_abbreviated": 6.3278,
+        "uspto30k_clean": 6.3278,
+        "uspto30k_large": 6.3278,
+        "v3_aug_real_world": 3.9132
+      },
+      "difficulty_counts": {
+        "abbreviated": 1507,
+        "chinese_exam": 876,
+        "clean": 1501,
+        "degraded_scan": 474,
+        "document_embed": 423,
+        "easy": 774,
+        "handwritten": 306,
+        "hard": 2006,
+        "journal_fig": 411,
+        "large": 1513,
+        "medium": 6089,
+        "medium_hard": 5043,
+        "multi_grid": 294,
+        "page_level": 486,
+        "photo": 984,
+        "scan": 1002
+      },
+      "policy_counts": {
+        "cap_1500": 4521,
+        "repeat_1": 9912,
+        "repeat_2": 4000,
+        "repeat_5": 4329,
+        "v3_offline_aug_1": 927
+      }
+    },
+    "B_recommended": {
+      "rows": 24489,
+      "unique_image_refs": 18969,
+      "unique_canonical_smiles": 16089,
+      "source_counts": {
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 14,
+        "molgrapher_synthetic": 4000,
+        "molrecbench_wild": 800,
+        "real_world": 4125,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_abbreviated": 1499,
+        "uspto30k_clean": 1499,
+        "uspto30k_large": 1499,
+        "v3_aug_real_world": 927
+      },
+      "source_percent": {
+        "auto_weak_real_world": 0.833,
+        "auto_weak_uspto": 0.0327,
+        "auto_weak_uspto30k_abbreviated": 0.0327,
+        "auto_weak_uspto30k_clean": 0.0082,
+        "auto_weak_uspto30k_large": 0.0572,
+        "molgrapher_synthetic": 16.3339,
+        "molrecbench_wild": 3.2668,
+        "real_world": 16.8443,
+        "uob": 19.8824,
+        "uspto": 20.5603,
+        "uspto30k_abbreviated": 6.1211,
+        "uspto30k_clean": 6.1211,
+        "uspto30k_large": 6.1211,
+        "v3_aug_real_world": 3.7854
+      },
+      "difficulty_counts": {
+        "abbreviated": 1507,
+        "chinese_exam": 876,
+        "clean": 1501,
+        "degraded_scan": 474,
+        "document_embed": 423,
+        "easy": 890,
+        "handwritten": 306,
+        "hard": 2317,
+        "journal_fig": 411,
+        "large": 1513,
+        "medium": 6182,
+        "medium_hard": 5323,
+        "multi_grid": 294,
+        "page_level": 486,
+        "photo": 984,
+        "scan": 1002
+      },
+      "policy_counts": {
+        "cap_1500": 4521,
+        "repeat_1": 9912,
+        "repeat_2": 4000,
+        "repeat_5": 4329,
+        "unweighted": 800,
+        "v3_offline_aug_1": 927
+      }
+    },
+    "C_real_heavy": {
+      "rows": 25416,
+      "unique_image_refs": 19794,
+      "unique_canonical_smiles": 16089,
+      "source_counts": {
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 14,
+        "molgrapher_synthetic": 4000,
+        "molrecbench_wild": 800,
+        "real_world": 4125,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_abbreviated": 1499,
+        "uspto30k_clean": 1499,
+        "uspto30k_large": 1499,
+        "v3_aug_real_world": 1854
+      },
+      "source_percent": {
+        "auto_weak_real_world": 0.8026,
+        "auto_weak_uspto": 0.0315,
+        "auto_weak_uspto30k_abbreviated": 0.0315,
+        "auto_weak_uspto30k_clean": 0.0079,
+        "auto_weak_uspto30k_large": 0.0551,
+        "molgrapher_synthetic": 15.7381,
+        "molrecbench_wild": 3.1476,
+        "real_world": 16.2299,
+        "uob": 19.1572,
+        "uspto": 19.8104,
+        "uspto30k_abbreviated": 5.8979,
+        "uspto30k_clean": 5.8979,
+        "uspto30k_large": 5.8979,
+        "v3_aug_real_world": 7.2946
+      },
+      "difficulty_counts": {
+        "abbreviated": 1507,
+        "chinese_exam": 1034,
+        "clean": 1501,
+        "degraded_scan": 557,
+        "document_embed": 498,
+        "easy": 890,
+        "handwritten": 364,
+        "hard": 2317,
+        "journal_fig": 482,
+        "large": 1513,
+        "medium": 6182,
+        "medium_hard": 5323,
+        "multi_grid": 345,
+        "page_level": 570,
+        "photo": 1156,
+        "scan": 1177
+      },
+      "policy_counts": {
+        "cap_1500": 4521,
+        "repeat_1": 9912,
+        "repeat_2": 4000,
+        "repeat_5": 4329,
+        "unweighted": 800,
+        "v3_offline_aug_1": 927,
+        "v3_offline_aug_2": 927
+      }
+    },
+    "hard_replay_seed": {
+      "rows": 7000,
+      "unique_image_refs": 4289,
+      "unique_canonical_smiles": 3757,
+      "source_counts": {
+        "auto_weak_real_world": 140,
+        "auto_weak_uspto": 4,
+        "auto_weak_uspto30k_abbreviated": 6,
+        "auto_weak_uspto30k_clean": 2,
+        "auto_weak_uspto30k_large": 10,
+        "molgrapher_synthetic": 1012,
+        "molrecbench_wild": 496,
+        "real_world": 2579,
+        "uob": 2,
+        "uspto": 641,
+        "uspto30k_abbreviated": 302,
+        "uspto30k_clean": 284,
+        "uspto30k_large": 961,
+        "v3_aug_real_world": 561
+      },
+      "source_percent": {
+        "auto_weak_real_world": 2.0,
+        "auto_weak_uspto": 0.0571,
+        "auto_weak_uspto30k_abbreviated": 0.0857,
+        "auto_weak_uspto30k_clean": 0.0286,
+        "auto_weak_uspto30k_large": 0.1429,
+        "molgrapher_synthetic": 14.4571,
+        "molrecbench_wild": 7.0857,
+        "real_world": 36.8429,
+        "uob": 0.0286,
+        "uspto": 9.1571,
+        "uspto30k_abbreviated": 4.3143,
+        "uspto30k_clean": 4.0571,
+        "uspto30k_large": 13.7286,
+        "v3_aug_real_world": 8.0143
+      },
+      "difficulty_counts": {
+        "abbreviated": 308,
+        "chinese_exam": 604,
+        "clean": 286,
+        "degraded_scan": 259,
+        "document_embed": 261,
+        "easy": 69,
+        "handwritten": 221,
+        "hard": 1133,
+        "journal_fig": 224,
+        "large": 971,
+        "medium": 126,
+        "medium_hard": 827,
+        "multi_grid": 160,
+        "page_level": 353,
+        "photo": 599,
+        "scan": 599
+      },
+      "policy_counts": {
+        "cap_1500": 1565,
+        "repeat_1": 647,
+        "repeat_2": 1012,
+        "repeat_5": 2719,
+        "unweighted": 496,
+        "v3_offline_aug_1": 561
+      }
+    }
+  },
+  "wild_eval": {
+    "strict_rows": 301,
+    "symbolic_rows": 460,
+    "scaffold_novel_rows": 134,
+    "human_review_status": "pending"
+  },
+  "leakage_policy": [
+    "base and strict MolRecBench train rows are excluded on canonical molecule overlap with all development and locked-test panels",
+    "MolRecBench is split by paper_group before row-level sampling so no paper appears in both train and locked test",
+    "legacy core and region panels are development-only because they were used during V2-1 tuning"
+  ]
+}

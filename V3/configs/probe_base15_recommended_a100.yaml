@@ -1,0 +1,67 @@
+### data
+train_dataset_type: messages
+eval_dataset_type: messages
+train_dataset_path: ./V3/data/sft_materialized/train_v3_b_recommended.jsonl
+train_dataset_prob: "1.0"
+eval_dataset_path: ./V3/data/sft_materialized/dev_legacy_region_strict_messages.jsonl
+eval_dataset_prob: "1.0"
+max_seq_len: 4096
+padding_free: True
+truncate_packing: False
+dataloader_num_workers: 8
+mix_strategy: concat
+template_backend: custom
+template: paddleocr_vl
+
+### model
+model_name_or_path: ./V3/models/paddleocr_vl_1_5_base
+_attn_implementation: flashmask
+lora: true
+lora_rank: 16
+copy_custom_file_list: "configuration_paddleocr_vl.py image_processing_paddleocr_vl.py modeling_paddleocr_vl.py processing_paddleocr_vl.py inference.yml"
+
+### finetuning
+stage: VL-SFT
+fine_tuning: lora
+seed: 20260717
+do_train: true
+do_eval: true
+per_device_eval_batch_size: 4
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 4
+max_steps: 250
+eval_steps: 125
+evaluation_strategy: steps
+save_steps: 125
+save_strategy: steps
+logging_steps: 5
+logging_dir: ./V3/outputs/probe_base15_recommended/visualdl_logs
+output_dir: ./V3/outputs/probe_base15_recommended
+disable_tqdm: true
+eval_accumulation_steps: 8
+
+### optimizer
+lr_scheduler_type: cosine
+warmup_ratio: 0.05
+learning_rate: 2.0e-5
+min_lr: 2.0e-6
+weight_decay: 0.05
+adam_epsilon: 1.0e-8
+adam_beta1: 0.9
+adam_beta2: 0.95
+
+### A100 80GB
+tensor_model_parallel_size: 1
+pipeline_model_parallel_size: 1
+sharding: stage1
+recompute_granularity: full
+recompute_method: uniform
+recompute_num_layers: 1
+bf16: true
+fp16_opt_level: O2
+pre_alloc_memory: 70
+
+### save
+unified_checkpoint: False
+save_checkpoint_format: "flex_checkpoint"
+load_checkpoint_format: "flex_checkpoint"

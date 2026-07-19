@@ -1,0 +1,6 @@
+gradio>=5.0,<6.0
+pillow>=10.0
+rdkit>=2024.03
+safetensors>=0.4
+torch>=2.4
+transformers>=4.55

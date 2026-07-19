@@ -1,0 +1,135 @@
+{
+  "phase": "final_s1",
+  "validity_floor": 0.7081474103585658,
+  "tie_tolerance": 0.005,
+  "checkpoints": [
+    {
+      "checkpoint": "checkpoint-200",
+      "step": 200,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3426294820717131,
+          "valid_rate": 0.7436918990703851
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.35145888594164454,
+          "valid_rate": 0.76657824933687
+        }
+      },
+      "macro_exact": 0.3470441840066788,
+      "min_valid_rate": 0.7436918990703851
+    },
+    {
+      "checkpoint": "checkpoint-400",
+      "step": 400,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.33598937583001326,
+          "valid_rate": 0.7410358565737052
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.3421750663129973,
+          "valid_rate": 0.7785145888594165
+        }
+      },
+      "macro_exact": 0.3390822210715053,
+      "min_valid_rate": 0.7410358565737052
+    },
+    {
+      "checkpoint": "checkpoint-600",
+      "step": 600,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.32669322709163345,
+          "valid_rate": 0.750332005312085
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.33421750663129973,
+          "valid_rate": 0.7917771883289124
+        }
+      },
+      "macro_exact": 0.3304553668614666,
+      "min_valid_rate": 0.750332005312085
+    },
+    {
+      "checkpoint": "checkpoint-800",
+      "step": 800,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.34130146082337315,
+          "valid_rate": 0.750332005312085
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.34748010610079577,
+          "valid_rate": 0.7917771883289124
+        }
+      },
+      "macro_exact": 0.34439078346208446,
+      "min_valid_rate": 0.750332005312085
+    },
+    {
+      "checkpoint": "checkpoint-1000",
+      "step": 1000,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.33598937583001326,
+          "valid_rate": 0.7370517928286853
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.3395225464190981,
+          "valid_rate": 0.7758620689655172
+        }
+      },
+      "macro_exact": 0.3377559611245557,
+      "min_valid_rate": 0.7370517928286853
+    },
+    {
+      "checkpoint": "checkpoint-1200",
+      "step": 1200,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.350597609561753,
+          "valid_rate": 0.7370517928286853
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.356763925729443,
+          "valid_rate": 0.7811671087533156
+        }
+      },
+      "macro_exact": 0.35368076764559797,
+      "min_valid_rate": 0.7370517928286853
+    },
+    {
+      "checkpoint": "checkpoint-1400",
+      "step": 1400,
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3559096945551129,
+          "valid_rate": 0.7463479415670651
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.363395225464191,
+          "valid_rate": 0.7931034482758621
+        }
+      },
+      "macro_exact": 0.35965246000965195,
+      "min_valid_rate": 0.7463479415670651
+    }
+  ],
+  "winner": {
+    "checkpoint": "checkpoint-1400",
+    "step": 1400,
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.3559096945551129,
+        "valid_rate": 0.7463479415670651
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.363395225464191,
+        "valid_rate": 0.7931034482758621
+      }
+    },
+    "macro_exact": 0.35965246000965195,
+    "min_valid_rate": 0.7463479415670651
+  }
+}

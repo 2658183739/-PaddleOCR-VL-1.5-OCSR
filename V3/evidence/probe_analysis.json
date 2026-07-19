@@ -1,0 +1,226 @@
+{
+  "runs": {
+    "data_00_s1": {
+      "run_id": "data_00_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.33067729083665337,
+          "valid_rate": 0.7131474103585658
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.3421750663129973,
+          "valid_rate": 0.7480106100795756
+        }
+      },
+      "macro_exact": 0.3364261785748254,
+      "min_valid_rate": 0.7131474103585658
+    },
+    "data_00_s2": {
+      "run_id": "data_00_s2",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3399734395750332,
+          "valid_rate": 0.750332005312085
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.35145888594164454,
+          "valid_rate": 0.7824933687002652
+        }
+      },
+      "macro_exact": 0.34571616275833883,
+      "min_valid_rate": 0.750332005312085
+    },
+    "data_10_s1": {
+      "run_id": "data_10_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3346613545816733,
+          "valid_rate": 0.749003984063745
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.34350132625994695,
+          "valid_rate": 0.7891246684350133
+        }
+      },
+      "macro_exact": 0.3390813404208101,
+      "min_valid_rate": 0.749003984063745
+    },
+    "data_10_s2": {
+      "run_id": "data_10_s2",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.32138114209827356,
+          "valid_rate": 0.7357237715803453
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.33156498673740054,
+          "valid_rate": 0.7758620689655172
+        }
+      },
+      "macro_exact": 0.3264730644178371,
+      "min_valid_rate": 0.7357237715803453
+    },
+    "data_01_s1": {
+      "run_id": "data_01_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3293492695883134,
+          "valid_rate": 0.7463479415670651
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.34084880636604775,
+          "valid_rate": 0.7851458885941645
+        }
+      },
+      "macro_exact": 0.33509903797718055,
+      "min_valid_rate": 0.7463479415670651
+    },
+    "data_01_s2": {
+      "run_id": "data_01_s2",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3293492695883134,
+          "valid_rate": 0.7317397078353254
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.33819628647214856,
+          "valid_rate": 0.7705570291777188
+        }
+      },
+      "macro_exact": 0.333772778030231,
+      "min_valid_rate": 0.7317397078353254
+    },
+    "data_11_s1": {
+      "run_id": "data_11_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.33731739707835323,
+          "valid_rate": 0.7370517928286853
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.34615384615384615,
+          "valid_rate": 0.7785145888594165
+        }
+      },
+      "macro_exact": 0.3417356216160997,
+      "min_valid_rate": 0.7370517928286853
+    },
+    "data_11_s2": {
+      "run_id": "data_11_s2",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.3333333333333333,
+          "valid_rate": 0.7423638778220452
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.3395225464190981,
+          "valid_rate": 0.7771883289124668
+        }
+      },
+      "macro_exact": 0.3364279398762157,
+      "min_valid_rate": 0.7423638778220452
+    }
+  },
+  "conditions": {
+    "00": {
+      "run_ids": [
+        "data_00_s1",
+        "data_00_s2"
+      ],
+      "mean_macro_exact": 0.3410711706665821,
+      "seed_range": 0.009289984183513456,
+      "min_valid_rate": 0.7131474103585658
+    },
+    "10": {
+      "run_ids": [
+        "data_10_s1",
+        "data_10_s2"
+      ],
+      "mean_macro_exact": 0.3327772024193236,
+      "seed_range": 0.01260827600297304,
+      "min_valid_rate": 0.7357237715803453
+    },
+    "01": {
+      "run_ids": [
+        "data_01_s1",
+        "data_01_s2"
+      ],
+      "mean_macro_exact": 0.33443590800370576,
+      "seed_range": 0.0013262599469495706,
+      "min_valid_rate": 0.7317397078353254
+    },
+    "11": {
+      "run_ids": [
+        "data_11_s1",
+        "data_11_s2"
+      ],
+      "mean_macro_exact": 0.3390817807461577,
+      "seed_range": 0.005307681739883996,
+      "min_valid_rate": 0.7370517928286853
+    }
+  },
+  "effects": {
+    "wild_main_effect": -0.0018240477524033016,
+    "augmentation_main_effect": -0.0001653421680211098,
+    "interaction": 0.012939840989710405
+  },
+  "diagnostics": {
+    "augmentation_dose2": {
+      "run_id": "aug_dose2_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.33598937583001326,
+          "valid_rate": 0.7317397078353254
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.34350132625994695,
+          "valid_rate": 0.7745358090185677
+        }
+      },
+      "macro_exact": 0.3397453510449801,
+      "min_valid_rate": 0.7317397078353254,
+      "delta_vs_11_s1": -0.0019902705711196123,
+      "passes_validity_gate": true,
+      "selection_margin": 0.005
+    },
+    "warmstart": {
+      "run_id": "warmstart_control_s1",
+      "checkpoint": "checkpoint-250",
+      "panels": {
+        "legacy_core_dev": {
+          "canonical_exact": 0.0,
+          "valid_rate": 0.28419654714475434
+        },
+        "legacy_region_dev": {
+          "canonical_exact": 0.0,
+          "valid_rate": 0.27320954907161804
+        }
+      },
+      "macro_exact": 0.0,
+      "min_valid_rate": 0.27320954907161804,
+      "continuation_run_id": "data_11_s1",
+      "continuation_minus_base15": 0.3417356216160997
+    }
+  },
+  "validity_floor": 0.7081474103585658,
+  "winner": {
+    "condition": "00",
+    "dataset_path": "./V3/data/sft_materialized/train_v3_a_control.jsonl",
+    "run_ids": [
+      "data_00_s1",
+      "data_00_s2"
+    ],
+    "mean_macro_exact": 0.3410711706665821,
+    "seed_range": 0.009289984183513456,
+    "min_valid_rate": 0.7131474103585658
+  }
+}

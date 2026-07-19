@@ -1,0 +1,56 @@
+{
+  "regression_tolerance": 0.005,
+  "minimum_improvement": 0.005,
+  "baseline": {
+    "label": "beam4_return4",
+    "root": "/root/autodl-tmp/V3/eval_runs_generation/beam4_return4",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.4169986719787517,
+        "valid_rate": 0.8871181938911022
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.4244031830238727,
+        "valid_rate": 0.9045092838196287
+      }
+    },
+    "macro_exact": 0.42070092750131216,
+    "min_valid_rate": 0.8871181938911022
+  },
+  "candidate": {
+    "label": "beam4_chem_light",
+    "root": "/root/autodl-tmp/V3/eval_runs_generation/beam4_chem_light",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.39176626826029215,
+        "valid_rate": 0.8804780876494024
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.39920424403183025,
+        "valid_rate": 0.896551724137931
+      }
+    },
+    "macro_exact": 0.3954852561460612,
+    "min_valid_rate": 0.8804780876494024
+  },
+  "candidate_no_panel_regression": false,
+  "candidate_validity_ok": false,
+  "candidate_macro_delta": -0.025215671355250935,
+  "candidate_meaningful_improvement": false,
+  "winner": {
+    "label": "beam4_return4",
+    "root": "/root/autodl-tmp/V3/eval_runs_generation/beam4_return4",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.4169986719787517,
+        "valid_rate": 0.8871181938911022
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.4244031830238727,
+        "valid_rate": 0.9045092838196287
+      }
+    },
+    "macro_exact": 0.42070092750131216,
+    "min_valid_rate": 0.8871181938911022
+  }
+}

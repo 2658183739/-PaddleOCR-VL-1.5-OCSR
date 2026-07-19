@@ -1,0 +1,1 @@
+<image>OCR: Transcribe the molecular structure as a single-line SMILES-like string. Preserve symbolic atom or group labels and disconnected fragments exactly when present. Output only the string.

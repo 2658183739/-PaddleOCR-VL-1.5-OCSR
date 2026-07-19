@@ -1,0 +1,12 @@
+PaddleOCR-VL OCSR V3
+Copyright 2026 PaddleOCR-VL OCSR V3 contributors
+
+This project includes modifications and task-specific fine-tuning derived from
+PaddlePaddle/PaddleOCR-VL-1.5, which is distributed under Apache License 2.0.
+See https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.5.
+
+Training and evaluation source names, upstream URLs, license evidence, and
+redistribution limits are recorded in DATA_LICENSES_AND_ATTRIBUTION_zh.md.
+The project license does not replace or broaden third-party dataset terms.
+Raw third-party training images are not included in the public source or model
+release.

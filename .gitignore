@@ -1,33 +1,34 @@
-__pycache__/
-*.pyc
-.pytest_cache/
-.DS_Store
-
-data/assets/
-data/public_sources/
-data/incoming/
-data/sft_materialized/
-data/eval_generated/generated_eval_v1/
-
-outputs/
-outputs_v2/
-eval_runs_export_full/
-downloads/
+# Model weights and training artifacts
 models/
-patcid/
-
-*.zip
+outputs/
+logs/
+eval_runs_*/
 *.safetensors
-*.bin
-*.pt
+*.pdparams
+*.pdopt
 *.pth
-*.ckpt
-*.tar
-*.tar.gz
-*.7z
-*.rar
+*.bin
 
-.tmp_*
+# Raw or license-restricted data
+data/source/
+data/sft_materialized/
+data/assets/
+
+# Local environments and credentials
+.env
+.env.*
+.venv/
+venv/
+.conda*/
 *.pem
 *.key
-*.log
+id_rsa*
+id_ed25519*
+
+# Generated caches and packages
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.tar
+*.tar.gz
+*.zip

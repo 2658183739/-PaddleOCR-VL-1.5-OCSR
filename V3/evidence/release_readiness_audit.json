@@ -1,0 +1,133 @@
+{
+  "manifests": {
+    "final_train_control": {
+      "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\data\\sft_materialized\\train_v3_a_control.jsonl",
+      "rows": 22762,
+      "license_present": 0,
+      "license_coverage": 0.0,
+      "source_url_present": 0,
+      "source_url_coverage": 0.0,
+      "structure_id_present": 0,
+      "structure_id_coverage": 0.0,
+      "qc_status_counts": {
+        "missing": 22762
+      },
+      "source_counts": {
+        "molgrapher_synthetic": 4000,
+        "uob": 4869,
+        "uspto": 5035,
+        "uspto30k_large": 1499,
+        "uspto30k_clean": 1499,
+        "real_world": 4125,
+        "uspto30k_abbreviated": 1499,
+        "auto_weak_real_world": 204,
+        "auto_weak_uspto30k_large": 14,
+        "auto_weak_uspto": 8,
+        "auto_weak_uspto30k_abbreviated": 8,
+        "auto_weak_uspto30k_clean": 2
+      }
+    },
+    "dev_legacy_core": {
+      "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\data\\eval\\dev_legacy_core_strict\\labels.jsonl",
+      "rows": 753,
+      "license_present": 753,
+      "license_coverage": 1.0,
+      "source_url_present": 753,
+      "source_url_coverage": 1.0,
+      "structure_id_present": 753,
+      "structure_id_coverage": 1.0,
+      "qc_status_counts": {
+        "pass": 753
+      },
+      "source_counts": {
+        "decimer": 150,
+        "uob": 193,
+        "uspto": 196,
+        "real_world": 214
+      }
+    },
+    "dev_legacy_region": {
+      "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\data\\eval\\dev_legacy_region_strict\\labels.jsonl",
+      "rows": 754,
+      "license_present": 754,
+      "license_coverage": 1.0,
+      "source_url_present": 754,
+      "source_url_coverage": 1.0,
+      "structure_id_present": 754,
+      "structure_id_coverage": 1.0,
+      "qc_status_counts": {
+        "pass": 754
+      },
+      "source_counts": {
+        "uob": 193,
+        "uspto": 196,
+        "real_world": 214,
+        "edu_chemc": 151
+      }
+    },
+    "wild_strict_locked": {
+      "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\data\\eval\\wild_strict_v3\\labels.jsonl",
+      "rows": 301,
+      "license_present": 301,
+      "license_coverage": 1.0,
+      "source_url_present": 301,
+      "source_url_coverage": 1.0,
+      "structure_id_present": 301,
+      "structure_id_coverage": 1.0,
+      "qc_status_counts": {
+        "pending_manual_review": 301
+      },
+      "source_counts": {
+        "molrecbench_wild": 301
+      }
+    },
+    "wild_symbolic_locked": {
+      "path": "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\data\\eval\\wild_symbolic_v3\\labels.jsonl",
+      "rows": 460,
+      "license_present": 460,
+      "license_coverage": 1.0,
+      "source_url_present": 460,
+      "source_url_coverage": 1.0,
+      "structure_id_present": 460,
+      "structure_id_coverage": 1.0,
+      "qc_status_counts": {
+        "pending_manual_review": 460
+      },
+      "source_counts": {
+        "molrecbench_wild": 460
+      }
+    }
+  },
+  "project_files": {
+    "LICENSE": true,
+    "NOTICE": true,
+    "data_license_matrix": true,
+    "CONTRIBUTING": true,
+    "Dockerfile": false,
+    "model_card": true,
+    "dataset_card": true,
+    "reproduction_guide": true
+  },
+  "manual_review_sheet_present": true,
+  "manual_review_rows": 1068,
+  "manual_review_pending_rows": 1068,
+  "manual_review_panel_counts": {
+    "core_767": 767,
+    "wild_strict_v3": 301
+  },
+  "manual_review_attestation_present": true,
+  "manual_review_attested_complete": true,
+  "manual_review_attestation_scope": {
+    "legacy_core_development": 753,
+    "legacy_region_development": 754,
+    "wild_strict_locked": 301,
+    "wild_scaffold_novel_subset": 134,
+    "wild_symbolic_locked": 460
+  },
+  "private_photo_rows": 0,
+  "release_blockers": [
+    "final training manifest lacks complete sample-level license and source URL fields",
+    "private-photo evaluation set is empty",
+    "no container image or Dockerfile has been independently reproduced"
+  ]
+}

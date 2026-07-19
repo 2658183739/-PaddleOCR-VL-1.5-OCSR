@@ -1,0 +1,56 @@
+{
+  "regression_tolerance": 0.005,
+  "minimum_improvement": 0.005,
+  "baseline": {
+    "label": "final",
+    "root": "/root/autodl-tmp/V3/eval_runs_final/final_s1/checkpoint-1400",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.3559096945551129,
+        "valid_rate": 0.7463479415670651
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.363395225464191,
+        "valid_rate": 0.7931034482758621
+      }
+    },
+    "macro_exact": 0.35965246000965195,
+    "min_valid_rate": 0.7463479415670651
+  },
+  "candidate": {
+    "label": "hard_replay",
+    "root": "/root/autodl-tmp/V3/eval_runs_hard/hard_replay_s1/checkpoint-300",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.34926958831341304,
+        "valid_rate": 0.7290836653386454
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.35543766578249336,
+        "valid_rate": 0.7771883289124668
+      }
+    },
+    "macro_exact": 0.3523536270479532,
+    "min_valid_rate": 0.7290836653386454
+  },
+  "candidate_no_panel_regression": false,
+  "candidate_validity_ok": false,
+  "candidate_macro_delta": -0.0072988329616987535,
+  "candidate_meaningful_improvement": false,
+  "winner": {
+    "label": "final",
+    "root": "/root/autodl-tmp/V3/eval_runs_final/final_s1/checkpoint-1400",
+    "panels": {
+      "legacy_core_dev": {
+        "canonical_exact": 0.3559096945551129,
+        "valid_rate": 0.7463479415670651
+      },
+      "legacy_region_dev": {
+        "canonical_exact": 0.363395225464191,
+        "valid_rate": 0.7931034482758621
+      }
+    },
+    "macro_exact": 0.35965246000965195,
+    "min_valid_rate": 0.7463479415670651
+  }
+}

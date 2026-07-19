@@ -1,0 +1,46 @@
+{
+  "audited_at": "2026-07-19T07:08:54+08:00",
+  "remote_package": {
+    "name": "v3_final_model_scripts_evidence_20260719_002042.tar.gz",
+    "bytes": 1899176807,
+    "sha256": "aa3fd7f2e5c9f640ed5a9e66fbc2b8d54f537442f7bdbd27ce0d6ebd8a35e4e1",
+    "download_verified": true,
+    "extraction_verified": true,
+    "shutdown_command_accepted_at": "2026-07-19T00:32:12.9593598+08:00"
+  },
+  "final_model": {
+    "directory": "V3/models/final_best_export",
+    "weight_file": "model-00001-of-00001.safetensors",
+    "weight_bytes": 1917255968,
+    "weight_sha256": "2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13",
+    "config_sha256": "7757d2584da82c862eee7f44c808a2f98697800ebff9070c94dc7f99edfa79ba"
+  },
+  "results": {
+    "json": "V3/evidence/FINAL_RESULTS.json",
+    "json_sha256": "6007dda2139caa1a56fcd24f50e15cc3f319d6eccfd754987f10f6be926adcb6",
+    "checkpoint": "checkpoint-1400",
+    "development_greedy_macro_exact": 0.35965246000965195,
+    "development_beam_macro_exact": 0.42070092750131216,
+    "hard_replay_macro_exact": 0.3523536270479532,
+    "generation_policy": "beam4_return4",
+    "locked_wild_exact": 0.2292358803986711,
+    "locked_wild_valid": 0.8471760797342193,
+    "locked_scaffold_exact": 0.13432835820895522,
+    "locked_symbolic_whitespace_exact": 0.0
+  },
+  "verification": {
+    "local_unittests_passed": 29,
+    "local_unittests_failed": 0,
+    "pptx": "V3/outputs/PaddleOCR_VL_OCSR_V3_defense.pptx",
+    "pptx_sha256": "aa9af01ac2f08a09bf7f526ea4342957868bca1e57503c03804841fcd05921fb",
+    "pptx_slides": 10,
+    "pptx_layout_out_of_bounds": 0
+  },
+  "evidence_boundaries": {
+    "human_double_review_completed": false,
+    "private_photo_available": false,
+    "public_github_published": false,
+    "huggingface_published": false,
+    "project_license_selected": false
+  }
+}

@@ -1,0 +1,41 @@
+name: 复现问题
+description: 报告环境安装、模型加载、推理或评测复现问题
+title: "[Reproduction] "
+labels:
+  - reproduction
+body:
+  - type: markdown
+    attributes:
+      value: 请不要提交模型权重、私有数据、访问令牌或 SSH 信息。
+  - type: input
+    id: revision
+    attributes:
+      label: 代码与模型版本
+      description: Git commit、HF revision 和模型 SHA256
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境
+      description: GPU、driver、CUDA、Python、Paddle、PyTorch、Transformers、RDKit
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: 完整命令
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果与实际结果
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 已脱敏日志
+      description: 删除路径中的账号、令牌、密钥和受限数据内容

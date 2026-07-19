@@ -1,0 +1,7 @@
+﻿mixture,total_rows,auto_weak_real_world,auto_weak_uspto,auto_weak_uspto30k_abbreviated,auto_weak_uspto30k_clean,auto_weak_uspto30k_large,molgrapher_synthetic,molrecbench_wild,real_world,uob,uspto,uspto30k_abbreviated,uspto30k_clean,uspto30k_large,v3_aug_real_world
+A_control,22762,204,8,8,2,14,4000,0,4125,4869,5035,1499,1499,1499,0
+D_wild_only,23562,204,8,8,2,14,4000,800,4125,4869,5035,1499,1499,1499,0
+E_aug_only,23689,204,8,8,2,14,4000,0,4125,4869,5035,1499,1499,1499,927
+B_recommended,24489,204,8,8,2,14,4000,800,4125,4869,5035,1499,1499,1499,927
+C_real_heavy,25416,204,8,8,2,14,4000,800,4125,4869,5035,1499,1499,1499,1854
+hard_replay_seed,7000,140,4,6,2,10,1012,496,2579,2,641,302,284,961,561
