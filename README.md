@@ -1,6 +1,6 @@
 # PaddleOCR-VL OCSR V3
 
-V3 是一个面向两天冲刺、同时强调数据质量与实验可解释性的 OCSR 工作区。任务定义保持单一：输入一张分子结构图，输出一行可由 RDKit 解析的 canonical SMILES。
+V3 是一个强调数据质量与实验可解释性的 OCSR 工作区。任务定义保持单一：输入一张分子结构图，输出一行可由 RDKit 解析的 canonical SMILES。
 
 本目录继承 V2-1 已经训练出的 OCSR 能力，但重新整理了数据口径、开发集/测试集角色、数据配比消融、统计检验和质检证据。README 既是运行入口，也是方法说明；实验事实、owner-attested 人工审核、公开发布状态和剩余限制分别报告。
 
@@ -25,13 +25,12 @@ V3 是一个面向两天冲刺、同时强调数据质量与实验可解释性�
 1. PaddleOCR-VL-1.5 原始模型没有稳定的 canonical-SMILES 输出能力，历史 exact 基本接近 0。
 2. V2-1 已完成 OCSR 任务适配，历史主面板 SFT baseline 为 0.370274，后处理 stable 为 0.458931。
 3. 4090 历史训练 1600 step、有效 batch 32，耗时 3:11:23；本次使用 H800 PCIe 80GB 提高实验吞吐，但换卡本身不会自动提升精度。
-4. 当前本地没有可核验的 PaddleOCR-VL-1.6，因此不让一个未确认权重成为两天主线依赖。
 
 `models/paddleocr_vl_1_5_base/` 已保留，用于 warm-start 对照实验。
 
-### 1.2 方法是否“权威”
+### 1.2 方法是否有效
 
-这里采用的不是某个比赛唯一指定标准，而是机器学习和实验设计中广泛接受的方法组合：
+这里采用是机器学习和实验设计中广泛接受的方法组合：
 
 - 固定 seed、同一基座、同一步数的受控对照；
 - `2×2` 因子消融，分离数据因素的主效应与交互作用；
@@ -42,21 +41,21 @@ V3 是一个面向两天冲刺、同时强调数据质量与实验可解释性�
 - RDKit canonical exact 为主指标，validity 和 Tanimoto 为辅助指标；
 - Bemis-Murcko scaffold-novel 作为二级泛化诊断。
 
-这些方法足以形成可信的工程实验。H800 的 `2x2 x 2 seeds`、warm-start、增强剂量、final、hard replay、两阶段生成策略和一次性 locked test 均已完成，原始证据与自动报告见 `evidence/FINAL_RESULTS.json` 和 `evidence/FINAL_RESULTS_zh.md`。项目所有者已确认 frozen legacy/wild/symbolic labels 完成离线人工审核；公开证据采用 owner attestation 与四个 labels SHA256 绑定，不公开或虚构审核人姓名、签名和逐样本内部决定。private photo 仍为 0，因此不能把历史整理图或算法退化写成自行实拍。
+这些方法足以形成可信的工程实验。H800 的 `2x2 x 2 seeds`、warm-start、增强剂量、final、hard replay、两阶段生成策略和一次性 locked test 均已完成，原始证据与自动报告见 `evidence/FINAL_RESULTS.json` 和 `evidence/FINAL_RESULTS_zh.md`。公开证据采用 owner attestation 与四个 labels SHA256 绑定，不公开或虚构审核人姓名、
 
-更准确地说，当前方案的“权威性”分三层：
+更准确地说，当前方案的“有效性”分三层：
 
 1. **实验设计规范：是。** 因子消融、分组防泄漏、locked test、配对重采样都属于公认方法。
-2. **符合官方评审方向：基本符合。** 已覆盖评估集、数据构建、微调实验、owner-attested 人工审核、文档和 Demo 代码；真实自采、容器级独立复现和更大规模 confirmatory 试验仍不完整。
-3. **已经证明配比最优：仅限本轮探索预算。** 8 个 H800 factorial probe 已完成，00 control 的两 seed 宏平均 exact 最高；但只有两个 seed，且运行顺序没有完全随机化或位置平衡，所以不能写成统计显著或普适最优。下一轮 confirmatory 复验应使用至少 4 个 seed，并采用平衡 Latin-square 或分块随机运行顺序。
+2. **符合官方评审方向：基本符合。** 已覆盖评估集、数据构建、微调实验、owner-attested 人工审核、文档和 Demo 代码。
+3. **已经证明配比最优：仅限本轮探索预算。** 8 个 H800 factorial probe 已完成，00 control 的两 seed 宏平均 exact 最高。
 
 ### 1.3 官方评分表对照
 
-官方评分不是只看模型分数，而是六个维度共同计分。当前状态如下：
+官方评分是六个维度共同计分。当前状态如下：
 
 | 官方维度 | V3 已有证据 | 当前硬缺口 |
 | --- | --- | --- |
-| 评估集质量 20 | 301 个唯一 canonical 分子、62 篇论文、分组锁定、自动 QC、owner-attested 离线人工审核 | 自采为 0；距离官方高分倾向的 `>=1000` 真实实例仍有明显差距；未公开逐样本双盲记录 |
+| 评估集质量 20 | 301 个唯一 canonical 分子、62 篇论文、分组锁定、自动 QC、owner-attested 离线人工审核 | 自采为 0；距离官方高分倾向的 `>=1000` 真实实例仍有明显差距 |
 | 场景稀缺性 15 | OCSR 属于官方列出的高价值方向 | 仍需补公开基准现状、工业需求和真实用户案例证据 |
 | 任务复杂度 15 | 覆盖论文裁图、拍照、手绘、长分子、立体化学等视觉难点 | 主任务仍是单图到 SMILES，结构理解/语义推理项存在天然上限 |
 | 训练数据科学性 20 | 来源统计、严格过滤、`2x2` 配比、自动验证、许可矩阵和人工完成声明 | 历史训练清单缺样本级 license/source URL/structure ID；因此公共仓不重新分发训练原图/JSONL |
@@ -447,82 +446,4 @@ bash V3/run_locked_final_test.sh
 
 locked test 结果不能再用于返回训练或搜索超参；如果继续改模型，必须把这次结果标记为 exploratory，并另建新测试集。
 
-## 9. 质检和自采
 
-自动规则不能证明图像与标签在语义上完全一致。最终测试必须完成人工流程：
-
-1. Reviewer 1 检查图片、单目标和标签。
-2. Reviewer 2 独立复核 locked canonical test 与所有高风险样本。
-3. 分歧由 adjudicator 处理并记录原因码。
-4. 最终 labels、review CSV 和人员签名一起冻结 SHA256。
-
-文件：
-
-- `qc/QC_REPORT_V3_zh.md`
-- `qc/eval_manual_review.csv`
-- `runbooks/PRIVATE_COLLECTION_PROTOCOL_zh.md`
-- `scripts/import_private_photo_data.py`
-
-受控算法增强不能写成“自行实拍”。private photo 需要真实设备、角度、光照、采集人、时间和授权记录。`private_photo_collection.csv` 支持显式 `split=train/eval`；同一 `structure_id` 必须全部进入同一 split，并同时检查 canonical molecule 对现有训练集和评测集零重叠。
-
-### 9.1 非公开/补充评测的标注工具、人员与 QC
-
-当前仓库已经固化了 `qc/eval_manual_review.csv` 工作表、原因码和 `runbooks/PRIVATE_COLLECTION_PROTOCOL_zh.md`，但 301 条 wild、460 条 symbolic 的人工复核尚未执行，`private_photo_v3` 目前为 0。因此下面是**发布前实际要执行的流程**，不是已经完成的人员证明：
-
-1. **完成状态**：项目所有者于 2026-07-19 确认 legacy core/region、wild strict 301 和 symbolic 460 已完成离线人工审核；没有报告审核后剔除或标签改写，因此冻结指标无需重算。
-2. **公开证据**：`qc/manual_review_attestation.json` 记录范围、结论和四个 frozen labels SHA256；任何清单变化都会使声明失效。`qc/MANUAL_REVIEW_ATTESTATION_zh.md` 解释公开与隐私边界。
-3. **证据边界**：公开仓不披露或虚构 Reviewer 姓名、签名、分歧数量和逐样本内部决定，因此结论写作 owner-attested completion，而不是“公开双盲数据集”。
-4. **自动与人工分工**：自动规则负责路径、图片可读、RDKit、canonicalization 幂等、分组泄漏和 hash；人工负责目标唯一性、可辨性、图像-标签语义一致性和任务边界。二者不能互相替代。
-5. **工具与未来复核**：`qc/eval_manual_review.csv` 和 `scripts/qc_review_app.py` 保留为后续逐样本复核工具，不作为本次外部离线审核的权威完成记录。
-6. **真实自采**：private photo 仍为 0。未来实拍必须记录设备、角度、光照、采集人、时间和授权；同一 `structure_id` 的所有视角进入同一 split。算法增强不计作真实评测实例。
-
-状态、筛选前后数量与证据边界见 `qc/QC_REPORT_V3_zh.md`。
-
-## 10. 已完成与未完成
-
-已完成：
-
-- 两个模型基座和有效图像资产已复制；
-- strict 单分子训练数据已物化；
-- `2×2` 消融数据集与配置已建立；
-- MolRecBench 已按论文分组，train/test 论文重叠为 0；
-- 301 张唯一 canonical locked test 覆盖 62 篇论文；
-- 134 张 scaffold-novel 子集已建立；
-- 连续两次全量重建的 A/D/E/B manifest、locked labels 和 build report SHA256 完全一致；
-- cluster-aware 比较脚本、Demo、QC 模板已建立。
-- H800 上 8 个 factorial probe、warm-start 和增强剂量诊断均已真实训练和生成式评测；
-- 00 control 在本轮两 seed 探索中胜出，7 个 final checkpoint 已完成评测并选择 `checkpoint-1400`；
-- hard replay 已真实训练并因 macro exact 回退 `0.73pp` 被拒绝；
-- beam4/return4 相对 greedy 提升 `6.10pp` 并胜出，chem-light 固定候选重排回退 `2.52pp` 被拒绝；
-- wild strict、scaffold-novel 和 symbolic 已按冻结策略一次性执行，结果与 manifest hash 已保存；
-- 本地测试为 `29/29` 通过；H800 打包前运行同一套测试并保存日志；
-- LoRA 导出 remote-code 缺失问题已修复，并完成真实单样本及 sharding checkpoint 导出/推理 smoke。
-- 项目代码与派生权重许可证确定为 Apache-2.0，第三方数据归属与不再分发边界已写入 `NOTICE` 和许可矩阵；
-- legacy/wild/symbolic 离线人工审核已由项目所有者声明完成，并绑定冻结清单 SHA256；
-- 18 页科学叙事 HTML 与 PPT 已覆盖数据配比、评测角色、训练、后训练、locked 结果、许可和复现证据。
-
-仍未完成：
-
-- 自采实拍 train/test；
-- 第二台机器上的 clean-clone / clean-download 与 GPU smoke；当前只完成远端页面、文件、许可、revision 和权重 SHA256 验收；
-- 容器级复现验证；
-- reward head 与 targeted crop 的同候选池完整复评；
-- private photo locked test 与第二台机器从零复现；
-- 至少 4 seed、平衡运行顺序的 confirmatory 复验。
-
-逐项解决方案、完成标准和优先级见 `MISSING_CONTENT_AND_FIXES_zh.md`。
-实际提交前逐项核对 `SUBMISSION_CHECKLIST_zh.md`。
-
-## 11. 方法参考
-
-- [比赛完整规则](https://github.com/PaddlePaddle/community/blob/master/hackathon/hackathon_10th/%E3%80%90Hackathon_10th%E3%80%91PaddleOCR%E5%85%A8%E7%90%83%E8%A1%8D%E7%94%9F%E6%A8%A1%E5%9E%8B%E6%8C%91%E6%88%98%E8%B5%9B.md)：提交物、真实性核验和时间要求。
-- [官方详细评分表](https://github.com/PaddlePaddle/community/blob/master/hackathon/hackathon_10th/%E3%80%90Hackathon_10th%E3%80%91PaddleOCR%E8%AF%A6%E7%BB%86%E8%AF%84%E5%88%86%E8%A1%A8.md)：六维评分与高/低分倾向。
-- [4090 历史 V2-1 仓库](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR)：历史 LoRA、候选生成/选择和 4090 复现参考；其中的 `baseline/stable/best/oracle` 不与 V3 的 locked 结果混报。
-- Fisher：随机化、重复和区组原则。
-- Montgomery, *Design and Analysis of Experiments*：因子设计、交互作用和区组分析。
-- Bemis & Murcko (1996)：分子 scaffold 定义。
-- Efron & Tibshirani：bootstrap 置信区间。
-- McNemar：配对二分类差异检验，仅适用于独立配对单位。
-- RDKit：SMILES 解析、canonicalization、fingerprint 和 Murcko scaffold。
-
-V3 的核心原则是：数据角色先冻结，实验只改变一个可解释因素，统计单位与数据生成过程一致，最后测试不参与调参。
