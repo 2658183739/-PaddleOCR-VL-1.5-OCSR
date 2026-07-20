@@ -28,6 +28,8 @@ npm start
 
 公开地址为 [GitHub](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR) 与 [Hugging Face](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)。训练与模型证据冻结基线为 GitHub [`a68b434f2a905562929c545470192b4b11f1c66c`](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR/commit/a68b434f2a905562929c545470192b4b11f1c66c) 和 Hugging Face [`e496110ec222c1a70ebca287990c07dae47a2daa`](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR/commit/e496110ec222c1a70ebca287990c07dae47a2daa)；包含 Agent、最终报告和答辩稿的交付提交以 `main` 最新提交及比赛包中的最终交付清单为准。GitHub 历史保留 V2-1 参考；不同面板和版本不能纵向混算提升率。
 
+决赛答辩优先使用 [`PaddleOCR_VL_OCSR_V3_template_final.pptx`](V3/presentation/PaddleOCR_VL_OCSR_V3_template_final.pptx)；该版本逐页继承官方提供的 18 页视觉模板，并用冻结证据、真实 MolTrace 截图和可编辑图表替换原示例内容。全稿总览见 [`PaddleOCR_VL_OCSR_V3_template_final_overview.png`](V3/presentation/PaddleOCR_VL_OCSR_V3_template_final_overview.png)。
+
 ## 1. 结论先读
 
 ### 1.1 模型路线
