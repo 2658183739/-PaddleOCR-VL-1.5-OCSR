@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>MolTrace OCSR Agent</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="MolTrace OCSR Agent 首页">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span><strong>MolTrace</strong><small>OCSR Agent · V3</small></span>
+    </a>
+    <nav class="tabs" aria-label="主导航">
+      <button class="tab active" data-view="workbench">识别工作台</button>
+      <button class="tab" data-view="history">运行历史 <span id="historyCount">0</span></button>
+      <button class="tab" data-view="evidence">模型证据</button>
+    </nav>
+    <div class="runtime"><span id="runtimeDot" class="status-dot"></span><span id="runtimeText">正在检查运行时</span></div>
+  </header>
+
+  <main>
+    <section id="workbenchView" class="view active">
+      <div class="contextbar">
+        <div><span class="eyebrow">单图到 canonical SMILES</span><strong>可追溯分子结构识别</strong></div>
+        <div class="metric"><span>发布解码器</span><strong>Beam 4 / Return 4</strong></div>
+        <div class="metric"><span>开发集 exact</span><strong>42.07%</strong></div>
+        <div class="metric"><span>Locked wild</span><strong>22.92%</strong></div>
+      </div>
+
+      <div class="workspace">
+        <section class="panel input-panel" aria-labelledby="inputTitle">
+          <div class="panel-heading"><div><span class="step-no">01</span><h1 id="inputTitle">输入与质检</h1></div><button id="sampleBtn" class="text-button">载入示例</button></div>
+          <label id="dropzone" class="dropzone" for="fileInput">
+            <input id="fileInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+            <img id="preview" alt="待识别分子结构图预览">
+            <div id="dropPrompt" class="drop-prompt">
+              <span class="upload-icon" aria-hidden="true">↑</span>
+              <strong>拖入分子结构图</strong>
+              <span>PNG / JPEG / WebP，最大 15 MB</span>
+            </div>
+          </label>
+          <div class="quality-grid">
+            <div><span>尺寸</span><strong id="diagSize">—</strong></div>
+            <div><span>亮度</span><strong id="diagBrightness">—</strong></div>
+            <div><span>对比度</span><strong id="diagContrast">—</strong></div>
+            <div><span>质量门</span><strong id="diagGate" class="gate">待输入</strong></div>
+          </div>
+          <div class="privacy-note"><span class="shield">✓</span> 默认不持久化原图；历史仅保存文件指纹和结果摘要。</div>
+        </section>
+
+        <section class="panel agent-panel" aria-labelledby="agentTitle">
+          <div class="panel-heading"><div><span class="step-no">02</span><h2 id="agentTitle">Agent 计划</h2></div><span class="badge">AUDITABLE</span></div>
+          <div class="controls">
+            <label><span>Beam 数</span><output id="beamOut">4</output><input id="beams" type="range" min="1" max="4" value="4"></label>
+            <label><span>返回候选</span><select id="returns"><option>1</option><option>2</option><option selected>4</option></select></label>
+            <label><span>最大 token</span><select id="maxTokens"><option>128</option><option selected>256</option><option>384</option><option>512</option></select></label>
+            <label class="toggle-row"><span><strong>轻量 TTA</strong><small>灰度 / 对比度 / 锐化</small></span><input id="tta" type="checkbox"><i></i></label>
+          </div>
+          <ol id="trace" class="trace">
+            <li><span>1</span><div><strong>输入契约</strong><small>格式、大小、隐私</small></div><em>等待</em></li>
+            <li><span>2</span><div><strong>视觉质检</strong><small>分辨率、曝光、对比度</small></div><em>等待</em></li>
+            <li><span>3</span><div><strong>候选生成</strong><small>V3 多候选解码</small></div><em>等待</em></li>
+            <li><span>4</span><div><strong>化学校验</strong><small>RDKit canonicalization</small></div><em>等待</em></li>
+            <li><span>5</span><div><strong>一致性排序</strong><small>有效性、投票、分数</small></div><em>等待</em></li>
+            <li><span>6</span><div><strong>证据汇总</strong><small>结果、理由、边界</small></div><em>等待</em></li>
+          </ol>
+          <button id="runBtn" class="primary-button" disabled><span>运行 OCSR Agent</span><kbd>Ctrl ↵</kbd></button>
+        </section>
+
+        <section class="panel result-panel" aria-labelledby="resultTitle">
+          <div class="panel-heading"><div><span class="step-no">03</span><h2 id="resultTitle">结构结果</h2></div><span id="modeBadge" class="mode-badge">未运行</span></div>
+          <div id="emptyResult" class="result-empty"><span>⌁</span><strong>结果将在这里形成证据链</strong><small>先载入图片，再运行 Agent</small></div>
+          <div id="resultContent" class="result-content" hidden>
+            <div class="validity-line"><span id="validityBadge" class="validity">有效</span><span id="elapsed">— ms</span></div>
+            <label class="result-label">Canonical SMILES</label>
+            <div class="smiles-box"><code id="smilesOutput"></code><button id="copyBtn" title="复制 SMILES" aria-label="复制 SMILES">⧉</button></div>
+            <div class="confidence"><span>候选一致置信</span><div><i id="confidenceBar"></i></div><strong id="confidenceText">—</strong></div>
+            <div class="decision"><span>选择理由</span><p id="selectionReason"></p></div>
+            <div id="resultNotice" class="notice"></div>
+            <div class="result-actions"><button id="downloadBtn" class="secondary-button">导出 JSON</button><button id="clearBtn" class="icon-button" title="清空当前结果" aria-label="清空当前结果">×</button></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="candidate-band" aria-labelledby="candidateTitle">
+        <div class="band-heading"><div><span class="eyebrow">CANDIDATE EVIDENCE</span><h2 id="candidateTitle">候选比较</h2></div><p>主结果不是单次生成的黑盒输出，而是经过化学有效性和一致性约束的决策。</p></div>
+        <div class="table-wrap"><table><thead><tr><th>排序</th><th>候选 SMILES</th><th>RDKit</th><th>投票</th><th>生成分数</th><th>结构惩罚</th></tr></thead><tbody id="candidateRows"><tr class="placeholder-row"><td colspan="6">运行后显示候选级证据</td></tr></tbody></table></div>
+      </section>
+    </section>
+
+    <section id="historyView" class="view simple-view">
+      <div class="page-title"><div><span class="eyebrow">LOCAL AUDIT TRAIL</span><h1>运行历史</h1><p>只保留最近 20 条结果摘要，不保存上传原图。</p></div><button id="clearHistory" class="secondary-button">清空历史</button></div>
+      <div id="historyList" class="history-list"></div>
+    </section>
+
+    <section id="evidenceView" class="view simple-view">
+      <div class="page-title"><div><span class="eyebrow">RELEASE EVIDENCE</span><h1>模型与实验边界</h1><p>区分开发集选择、锁定测试和演示模式，避免把不可比数字放在一起。</p></div></div>
+      <div class="evidence-grid">
+        <article><span>01</span><h2>Checkpoint</h2><strong>1400</strong><p>受控 development 选模后的 final checkpoint；hard replay 因 -0.73pp 被拒绝。</p></article>
+        <article><span>02</span><h2>Decoder</h2><strong>Beam 4</strong><p>宏平均 exact 由 35.97% 提升到 42.07%，两面板 paired bootstrap 方向一致。</p></article>
+        <article><span>03</span><h2>Locked test</h2><strong>301</strong><p>62 篇论文整组留出，301 个唯一 canonical 分子；只在冻结后运行一次。</p></article>
+        <article><span>04</span><h2>Boundary</h2><strong>22.92%</strong><p>真实论文图域仍是主要瓶颈；不能用干净 printed 子域分数替代该结论。</p></article>
+      </div>
+    </section>
+  </main>
+  <footer><span>PaddleOCR-VL OCSR V3 · Apache-2.0</span><span>GitHub / Hugging Face release evidence is version-pinned</span></footer>
+  <canvas id="analysisCanvas" width="128" height="128" hidden></canvas>
+  <script src="/app.js"></script>
+</body>
+</html>

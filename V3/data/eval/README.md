@@ -1,5 +1,7 @@
 # OCSR 正式评测集说明（提交版）
 
+> **V3 final 口径说明：** 本文件保留早期“统一评测集”组织方案的历史说明。V3 最终实验采用 `dev_legacy_core_strict` 753 条、`dev_legacy_region_strict` 754 条、`wild_strict_v3` 301 条、`wild_strict_scaffold_novel_v3` 134 条和 `wild_symbolic_v3` 460 条的分角色设计；最终构建过程、实际目录和去泄漏证据以项目根目录的 `EVAL_DATASET_CONSTRUCTION_REPORT_zh.md` 为准。本文件中的旧总量不得作为 V3 locked final test 的样本量。
+
 ## 1. 数据集定位
 
 本目录为当前项目用于提交的 **OCSR 正式评测集（Evaluation Collection）**。

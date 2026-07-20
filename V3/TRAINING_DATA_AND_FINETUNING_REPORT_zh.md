@@ -4,6 +4,8 @@
 
 本报告记录 V3 如何把分子结构图转换为单分子 canonical SMILES，以及训练数据、评测划分、LoRA 微调、消融实验和后训练的可复现实验口径。报告只把已经写入清单、日志、评测报告、项目所有者审核声明或远端 revision 的内容称为结果；真实自采、独立机器复现等尚未完成的事项单独列为限制，不用计划替代证据。
 
+评测集的逐目录构建、V2-1 历史面板降级、论文级留出、去泄漏和许可边界见 `EVAL_DATASET_CONSTRUCTION_REPORT_zh.md`。
+
 任务定义是：输入一张分子结构图和固定 prompt，输出一行可以由 RDKit 解析的单分子 canonical SMILES。主指标是 RDKit canonical exact，valid SMILES、token F1、Tanimoto 和 scaffold-novel exact 用来解释错误类型，不能互相替代。
 
 ## 阅读路线：从数据到结论
@@ -142,8 +144,22 @@ screen -dmS v3pipeline bash -lc 'set -o pipefail; cd /root/autodl-tmp; bash V3/r
 
 流程顺序固定为 `2×2×2 probe -> final checkpoint 选择 -> hard replay gate -> greedy/beam 对照 -> locked test -> artifact package`。中断后依靠阶段完成标记恢复，不删除已有输出。H800 训练日志、checkpoint hash、环境快照和最终包路径必须一起保留。
 
-## 6. 限制与发布状态
+## 6. MolTrace Agent 前后端与应用闭环
 
-公共发布已完成：GitHub 源码提交为 `a68b434f2a905562929c545470192b4b11f1c66c`，Hugging Face 模型 revision 为 `e496110ec222c1a70ebca287990c07dae47a2daa`，远端 Xet 权重 SHA256 为 `2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13`。当前仍缺 private photo、Docker/第二台机器独立复现、clean-download 后的 GPU smoke 和至少四 seed 的 confirmatory 复验。项目采用 Apache-2.0，并用许可矩阵隔离不适合再分发的训练原图；人工审核由项目所有者声明完成。Demo 录屏不再作为本轮交付项。完整远端验收边界见 `evidence/PUBLIC_RELEASE_VERIFICATION_zh.md`。
+为了把离线模型证据变成可复核的使用流程，V3 增加 `V3/agent_demo/` 前后端工作台。浏览器端负责图片上传与预览、图像质量诊断、beam/return/TTA 参数设置、候选比较、六步决策轨迹、运行历史和 JSON 证据导出；零运行依赖的 Node 后端负责大小与格式限制、模型状态探针、临时文件生命周期、真实 V3 推理适配和结果汇总。真实模式固定调用 `V3/scripts/infer_ocsr_transformers.py`，从同一图像召回多个候选，再将可解析性、canonicalization、片段/dummy 风险和跨视图一致性写入 trace；Agent 的作用是公开决策证据，而不是用启发式结果替代冻结评测。
+
+系统明确区分三种状态：设置 `V3_MODEL_DIR` 时运行真实 GPU 模型；内置咖啡因样例以 `guided demo` 标记展示交互和已知标签；任意上传图在模型不可用时返回 `needs model`，不会伪造识别结果。默认不持久化原图，推理输入仅写入系统临时目录并在子进程退出后删除，历史只保留文件指纹和结果摘要。前后端已在 1440×1050 和 390×844 浏览器视口验收，并通过 5/5 Node 自动测试；这些测试证明接口、边界和 trace 可运行，不替代模型精度评测。
+
+最小启动方式：
+
+```bash
+cd V3/agent_demo
+npm start
+# http://127.0.0.1:8787
+```
+
+## 7. 限制与发布状态
+
+公共发布已完成：训练与模型证据冻结基线为 GitHub `a68b434f2a905562929c545470192b4b11f1c66c`，Hugging Face 模型 revision 为 `e496110ec222c1a70ebca287990c07dae47a2daa`，远端 Xet 权重 SHA256 为 `2a7ac278677ff56379e67933d6d81481991b755b93355fca5902cc36a7b1cc13`；包含 Agent、最终报告和答辩稿的 GitHub 交付提交记录在比赛包 `最终交付清单_V3_final.md`。当前仍缺 private photo、Docker/第二台机器独立复现、clean-download 后的 GPU smoke 和至少四 seed 的 confirmatory 复验。项目采用 Apache-2.0，并用许可矩阵隔离不适合再分发的训练原图；人工审核由项目所有者声明完成。Demo 录屏不再作为本轮交付项。完整远端验收边界见 `evidence/PUBLIC_RELEASE_VERIFICATION_zh.md`。
 
 不得把 UOB 小子集的 70%-80% 目标当作全量保证。当前证据显示干净 printed 子域可以明显高于真实页面、手绘和教育图；V3 的工程目标是先保证口径清楚、可复现和不夸大，再用候选召回、crop 和 hard replay 在固定回归闸门内争取增益。

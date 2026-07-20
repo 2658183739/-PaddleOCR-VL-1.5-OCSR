@@ -7,12 +7,26 @@ V3 是一个强调数据质量与实验可解释性的 OCSR 工作区。任务�
 提交材料的正式说明分为三层：
 
 - `TRAINING_DATA_AND_FINETUNING_REPORT_zh.md`：训练数据七部分、标签清洗、配比消融、后训练和复现实验记录。
+- `EVAL_DATASET_CONSTRUCTION_REPORT_zh.md`：V2-1 历史面板、V3 development/locked/symbolic 评测集构建、去泄漏、QC 和提交边界。
 - `OFFICIAL_FEEDBACK_RESPONSE_zh.md`：逐条对应官方意见，区分已完成证据、待人工完成事项和发布前门槛。
 - `DATASET_CARD_zh.md` / `MODEL_CARD_zh.md`：面向使用者的数据和模型限制说明。
 - `RELEASE_UPLOAD_GUIDE_zh.md`：比赛包、GitHub 与 Hugging Face 的发布边界和验收步骤。
 - `DATA_LICENSES_AND_ATTRIBUTION_zh.md`：逐来源许可证据、归属和“不重新分发训练原图”的边界。
+- `agent_demo/`：MolTrace OCSR Agent 前后端、真实 V3 推理适配器、浏览器界面与自动测试。
 
-公开地址为 [GitHub](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR) 与 [Hugging Face](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)。V3 公开源码提交为 [`a68b434f2a905562929c545470192b4b11f1c66c`](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR/commit/a68b434f2a905562929c545470192b4b11f1c66c)，模型 revision 为 [`e496110ec222c1a70ebca287990c07dae47a2daa`](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR/commit/e496110ec222c1a70ebca287990c07dae47a2daa)。GitHub 历史保留 V2-1 参考，当前 `V3/` 与 HF 主分支发布冻结的 V3 final；不同面板和版本不能纵向混算提升率。
+### MolTrace OCSR Agent 前后端
+
+V3 额外提供一个可直接运行的前后端工作台。浏览器端支持拖放上传、图像质检、beam/return/TTA 参数、候选对比、六步 trace、历史记录和 JSON 证据导出；Node 后端提供输入限制、模型状态探针、真实 V3 CLI 适配、RDKit 校验边界与临时文件清理。无模型时，任意上传图不会生成伪结果；只有内置咖啡因样例会以明确标注的 guided demo 方式展示完整流程。
+
+```bash
+cd V3/agent_demo
+npm start
+# 浏览器打开 http://127.0.0.1:8787
+```
+
+接入真实模型时设置 `V3_MODEL_DIR`、`PYTHON_BIN` 和 `V3_DEVICE`；详细 API、运行边界与测试方法见 [`V3/agent_demo/README.md`](V3/agent_demo/README.md)。
+
+公开地址为 [GitHub](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR) 与 [Hugging Face](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR)。训练与模型证据冻结基线为 GitHub [`a68b434f2a905562929c545470192b4b11f1c66c`](https://github.com/2658183739/-PaddleOCR-VL-1.5-OCSR/commit/a68b434f2a905562929c545470192b4b11f1c66c) 和 Hugging Face [`e496110ec222c1a70ebca287990c07dae47a2daa`](https://huggingface.co/L2658183739/PaddleOCR-VL-1.5-OCSR/commit/e496110ec222c1a70ebca287990c07dae47a2daa)；包含 Agent、最终报告和答辩稿的交付提交以 `main` 最新提交及比赛包中的最终交付清单为准。GitHub 历史保留 V2-1 参考；不同面板和版本不能纵向混算提升率。
 
 ## 1. 结论先读
 

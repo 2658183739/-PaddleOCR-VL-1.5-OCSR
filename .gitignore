@@ -26,6 +26,10 @@ id_rsa*
 id_ed25519*
 
 # Generated caches and packages
+.tooling/
+V3/presentation/*_audit/
+V3/presentation/*_qa/
+V3/presentation/*_preflight.json
 __pycache__/
 *.py[cod]
 .pytest_cache/

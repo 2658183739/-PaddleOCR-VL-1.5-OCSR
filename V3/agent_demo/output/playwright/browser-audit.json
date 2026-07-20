@@ -1,0 +1,28 @@
+{
+  "tested_at": "2026-07-19T23:40:29.073Z",
+  "desktop": {
+    "candidateRows": 4,
+    "mode": "GUIDED DEMO",
+    "overflowCount": 0,
+    "scrollWidth": 1425,
+    "width": 1425
+  },
+  "mobile": {
+    "docClient": 375,
+    "innerWidth": 390,
+    "mode": "GUIDED DEMO",
+    "overflowCount": 0,
+    "scrollWidth": 375,
+    "workspaceColumns": "351px"
+  },
+  "screenshots": [
+    "V3/agent_demo/output/playwright/agent-workbench-desktop.png",
+    "V3/agent_demo/output/playwright/agent-workbench-mobile.png"
+  ],
+  "checks": {
+    "unit_tests": 5,
+    "api_mode": "guided_demo",
+    "candidate_rows": 4,
+    "responsive_no_horizontal_overflow": true
+  }
+}

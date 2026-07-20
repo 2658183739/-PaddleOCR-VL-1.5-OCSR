@@ -1,8 +1,8 @@
 ﻿{
     "schema":  "paddleocr-vl-ocsr/ppt-shape-bounds-audit/v1",
-    "presentation":  "E:\\competition\\PaddleOCR 全球衍生模型挑战赛\\V3\\outputs\\PaddleOCR_VL_OCSR_V3_scientific_final.pptx",
+    "presentation":  "V3/presentation/PaddleOCR_VL_OCSR_V3_defense_final.pptx",
     "slides":  18,
-    "shapes":  412,
+    "shapes":  565,
     "slide_width_points":  960,
     "slide_height_points":  540,
     "out_of_bounds_count":  0,
